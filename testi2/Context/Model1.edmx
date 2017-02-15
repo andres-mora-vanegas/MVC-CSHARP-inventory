@@ -1,0 +1,1176 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="bd_siugModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tb_access">
+          <Key>
+            <PropertyRef Name="acc_id" />
+          </Key>
+          <Property Name="acc_id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="acc_us_id" Type="bigint" Nullable="false" />
+          <Property Name="acc_date" Type="date" />
+          <Property Name="acc_final_date" Type="date" />
+        </EntityType>
+        <EntityType Name="tb_bill">
+          <Key>
+            <PropertyRef Name="bil_id" />
+          </Key>
+          <Property Name="bil_id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="bil_date" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="bil_state" Type="bigint" />
+          <Property Name="bil_total" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="bil_sal_id" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_category">
+          <Key>
+            <PropertyRef Name="cat_id" />
+          </Key>
+          <Property Name="cat_id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cat_name" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="cat_descript" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="cat_state" Type="bigint" Nullable="false" />
+          <Property Name="cat_createDate" Type="timestamp" Precision="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_clients">
+          <Key>
+            <PropertyRef Name="cli_id" />
+          </Key>
+          <Property Name="cli_id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cli_nit" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="cli_name_company" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="cli_name_contact" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="cli_last_name_contact" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="cli_phone" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="cli_cel_phone" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="cli_email" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="cli_date" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="cli_state" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_profile">
+          <Key>
+            <PropertyRef Name="prof_id" />
+          </Key>
+          <Property Name="prof_id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="prof_name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="prof_status" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_provider">
+          <Key>
+            <PropertyRef Name="pro_id" />
+          </Key>
+          <Property Name="pro_id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="pro_name" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="pro_nit" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="pro_state" Type="bigint" Nullable="false" />
+          <Property Name="pro_contact" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="pro_phone" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="pro_email" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="tb_role">
+          <Key>
+            <PropertyRef Name="role_id" />
+          </Key>
+          <Property Name="role_id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="role_descript" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="role_status" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_role_user">
+          <Key>
+            <PropertyRef Name="rolu_id" />
+          </Key>
+          <Property Name="rolu_id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rolu_role_id" Type="bigint" Nullable="false" />
+          <Property Name="rolu_user_id" Type="bigint" Nullable="false" />
+          <Property Name="rolu_lastUpdate" Type="timestamp" Precision="0" />
+          <Property Name="rolu_status" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_sale">
+          <Key>
+            <PropertyRef Name="sal_id" />
+          </Key>
+          <Property Name="sal_id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sal_userId" Type="bigint" Nullable="false" />
+          <Property Name="sal_cli_id" Type="bigint" Nullable="false" />
+          <Property Name="sal_date" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="sal_state" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_sale_detail">
+          <Key>
+            <PropertyRef Name="sade_id" />
+          </Key>
+          <Property Name="sade_id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sade_sale_id" Type="bigint" Nullable="false" />
+          <Property Name="sade_stock_id" Type="bigint" Nullable="false" />
+          <Property Name="sade_quantity" Type="bigint" Nullable="false" />
+          <Property Name="sade_subtotal" Type="decimal" Precision="20" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_state">
+          <Key>
+            <PropertyRef Name="sta_id" />
+          </Key>
+          <Property Name="sta_id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sta_name" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_stock">
+          <Key>
+            <PropertyRef Name="sto_id" />
+          </Key>
+          <Property Name="sto_id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sto_descript" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="sto_state" Type="bigint" Nullable="false" />
+          <Property Name="sto_avaible" Type="bigint" Nullable="false" />
+          <Property Name="sto_buyPrice" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="sto_salePrice" Type="decimal" Precision="20" Scale="0" Nullable="false" />
+          <Property Name="sto_url" Type="varchar" MaxLength="200" />
+          <Property Name="sto_provId" Type="bigint" Nullable="false" />
+          <Property Name="sto_category" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_users">
+          <Key>
+            <PropertyRef Name="us_id" />
+          </Key>
+          <Property Name="us_id" Type="bigint" Nullable="false" />
+          <Property Name="us_name" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="us_lastname" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="us_phone" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="us_email" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="us_pass" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="us_cityId" Type="bigint" Nullable="false" />
+          <Property Name="us_createDate" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="us_state" Type="bigint" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_tb_clients_tb_state">
+          <End Role="tb_state" Type="Self.tb_state" Multiplicity="1" />
+          <End Role="tb_clients" Type="Self.tb_clients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_state">
+              <PropertyRef Name="sta_id" />
+            </Principal>
+            <Dependent Role="tb_clients">
+              <PropertyRef Name="cli_state" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tb_sale_tb_clients">
+          <End Role="tb_clients" Type="Self.tb_clients" Multiplicity="1" />
+          <End Role="tb_sale" Type="Self.tb_sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_clients">
+              <PropertyRef Name="cli_id" />
+            </Principal>
+            <Dependent Role="tb_sale">
+              <PropertyRef Name="sal_cli_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tb_access_ibfk_1">
+          <End Role="tb_users" Type="Self.tb_users" Multiplicity="1" />
+          <End Role="tb_access" Type="Self.tb_access" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_users">
+              <PropertyRef Name="us_id" />
+            </Principal>
+            <Dependent Role="tb_access">
+              <PropertyRef Name="acc_us_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tb_bill_ibfk_1">
+          <End Role="tb_state" Type="Self.tb_state" Multiplicity="0..1" />
+          <End Role="tb_bill" Type="Self.tb_bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_state">
+              <PropertyRef Name="sta_id" />
+            </Principal>
+            <Dependent Role="tb_bill">
+              <PropertyRef Name="bil_state" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tb_bill_ibfk_2">
+          <End Role="tb_sale" Type="Self.tb_sale" Multiplicity="1" />
+          <End Role="tb_bill" Type="Self.tb_bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_sale">
+              <PropertyRef Name="sal_id" />
+            </Principal>
+            <Dependent Role="tb_bill">
+              <PropertyRef Name="bil_sal_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tb_category_ibfk_1">
+          <End Role="tb_state" Type="Self.tb_state" Multiplicity="1" />
+          <End Role="tb_category" Type="Self.tb_category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_state">
+              <PropertyRef Name="sta_id" />
+            </Principal>
+            <Dependent Role="tb_category">
+              <PropertyRef Name="cat_state" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tb_profile_ibfk_1">
+          <End Role="tb_state" Type="Self.tb_state" Multiplicity="1" />
+          <End Role="tb_profile" Type="Self.tb_profile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_state">
+              <PropertyRef Name="sta_id" />
+            </Principal>
+            <Dependent Role="tb_profile">
+              <PropertyRef Name="prof_status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tb_provider_ibfk_1">
+          <End Role="tb_state" Type="Self.tb_state" Multiplicity="1" />
+          <End Role="tb_provider" Type="Self.tb_provider" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_state">
+              <PropertyRef Name="sta_id" />
+            </Principal>
+            <Dependent Role="tb_provider">
+              <PropertyRef Name="pro_state" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tb_role_ibfk_1">
+          <End Role="tb_state" Type="Self.tb_state" Multiplicity="1" />
+          <End Role="tb_role" Type="Self.tb_role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_state">
+              <PropertyRef Name="sta_id" />
+            </Principal>
+            <Dependent Role="tb_role">
+              <PropertyRef Name="role_status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tb_role_user_ibfk_1">
+          <End Role="tb_role" Type="Self.tb_role" Multiplicity="1" />
+          <End Role="tb_role_user" Type="Self.tb_role_user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_role">
+              <PropertyRef Name="role_id" />
+            </Principal>
+            <Dependent Role="tb_role_user">
+              <PropertyRef Name="rolu_role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tb_role_user_ibfk_2">
+          <End Role="tb_users" Type="Self.tb_users" Multiplicity="1" />
+          <End Role="tb_role_user" Type="Self.tb_role_user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_users">
+              <PropertyRef Name="us_id" />
+            </Principal>
+            <Dependent Role="tb_role_user">
+              <PropertyRef Name="rolu_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tb_role_user_ibfk_3">
+          <End Role="tb_state" Type="Self.tb_state" Multiplicity="1" />
+          <End Role="tb_role_user" Type="Self.tb_role_user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_state">
+              <PropertyRef Name="sta_id" />
+            </Principal>
+            <Dependent Role="tb_role_user">
+              <PropertyRef Name="rolu_status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tb_sale_detail_ibfk_1">
+          <End Role="tb_sale" Type="Self.tb_sale" Multiplicity="1" />
+          <End Role="tb_sale_detail" Type="Self.tb_sale_detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_sale">
+              <PropertyRef Name="sal_id" />
+            </Principal>
+            <Dependent Role="tb_sale_detail">
+              <PropertyRef Name="sade_sale_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tb_sale_detail_ibfk_2">
+          <End Role="tb_stock" Type="Self.tb_stock" Multiplicity="1" />
+          <End Role="tb_sale_detail" Type="Self.tb_sale_detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_stock">
+              <PropertyRef Name="sto_id" />
+            </Principal>
+            <Dependent Role="tb_sale_detail">
+              <PropertyRef Name="sade_stock_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tb_sale_ibfk_1">
+          <End Role="tb_users" Type="Self.tb_users" Multiplicity="1" />
+          <End Role="tb_sale" Type="Self.tb_sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_users">
+              <PropertyRef Name="us_id" />
+            </Principal>
+            <Dependent Role="tb_sale">
+              <PropertyRef Name="sal_userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tb_sale_ibfk_2">
+          <End Role="tb_state" Type="Self.tb_state" Multiplicity="1" />
+          <End Role="tb_sale" Type="Self.tb_sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_state">
+              <PropertyRef Name="sta_id" />
+            </Principal>
+            <Dependent Role="tb_sale">
+              <PropertyRef Name="sal_state" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tb_stock_ibfk_1">
+          <End Role="tb_state" Type="Self.tb_state" Multiplicity="1" />
+          <End Role="tb_stock" Type="Self.tb_stock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_state">
+              <PropertyRef Name="sta_id" />
+            </Principal>
+            <Dependent Role="tb_stock">
+              <PropertyRef Name="sto_state" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tb_stock_ibfk_2">
+          <End Role="tb_provider" Type="Self.tb_provider" Multiplicity="1" />
+          <End Role="tb_stock" Type="Self.tb_stock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_provider">
+              <PropertyRef Name="pro_id" />
+            </Principal>
+            <Dependent Role="tb_stock">
+              <PropertyRef Name="sto_provId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tb_stock_ibfk_3">
+          <End Role="tb_category" Type="Self.tb_category" Multiplicity="1" />
+          <End Role="tb_stock" Type="Self.tb_stock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_category">
+              <PropertyRef Name="cat_id" />
+            </Principal>
+            <Dependent Role="tb_stock">
+              <PropertyRef Name="sto_category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tb_users_ibfk_1">
+          <End Role="tb_state" Type="Self.tb_state" Multiplicity="1" />
+          <End Role="tb_users" Type="Self.tb_users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_state">
+              <PropertyRef Name="sta_id" />
+            </Principal>
+            <Dependent Role="tb_users">
+              <PropertyRef Name="us_state" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="bd_siugModelStoreContainer">
+          <EntitySet Name="tb_access" EntityType="Self.tb_access" Schema="bd_siug" store:Type="Tables" />
+          <EntitySet Name="tb_bill" EntityType="Self.tb_bill" Schema="bd_siug" store:Type="Tables" />
+          <EntitySet Name="tb_category" EntityType="Self.tb_category" Schema="bd_siug" store:Type="Tables" />
+          <EntitySet Name="tb_clients" EntityType="Self.tb_clients" Schema="bd_siug" store:Type="Tables" />
+          <EntitySet Name="tb_profile" EntityType="Self.tb_profile" Schema="bd_siug" store:Type="Tables" />
+          <EntitySet Name="tb_provider" EntityType="Self.tb_provider" Schema="bd_siug" store:Type="Tables" />
+          <EntitySet Name="tb_role" EntityType="Self.tb_role" Schema="bd_siug" store:Type="Tables" />
+          <EntitySet Name="tb_role_user" EntityType="Self.tb_role_user" Schema="bd_siug" store:Type="Tables" />
+          <EntitySet Name="tb_sale" EntityType="Self.tb_sale" Schema="bd_siug" store:Type="Tables" />
+          <EntitySet Name="tb_sale_detail" EntityType="Self.tb_sale_detail" Schema="bd_siug" store:Type="Tables" />
+          <EntitySet Name="tb_state" EntityType="Self.tb_state" Schema="bd_siug" store:Type="Tables" />
+          <EntitySet Name="tb_stock" EntityType="Self.tb_stock" Schema="bd_siug" store:Type="Tables" />
+          <EntitySet Name="tb_users" EntityType="Self.tb_users" Schema="bd_siug" store:Type="Tables" />
+          <AssociationSet Name="fk_tb_clients_tb_state" Association="Self.fk_tb_clients_tb_state">
+            <End Role="tb_state" EntitySet="tb_state" />
+            <End Role="tb_clients" EntitySet="tb_clients" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tb_sale_tb_clients" Association="Self.fk_tb_sale_tb_clients">
+            <End Role="tb_clients" EntitySet="tb_clients" />
+            <End Role="tb_sale" EntitySet="tb_sale" />
+          </AssociationSet>
+          <AssociationSet Name="tb_access_ibfk_1" Association="Self.tb_access_ibfk_1">
+            <End Role="tb_users" EntitySet="tb_users" />
+            <End Role="tb_access" EntitySet="tb_access" />
+          </AssociationSet>
+          <AssociationSet Name="tb_bill_ibfk_1" Association="Self.tb_bill_ibfk_1">
+            <End Role="tb_state" EntitySet="tb_state" />
+            <End Role="tb_bill" EntitySet="tb_bill" />
+          </AssociationSet>
+          <AssociationSet Name="tb_bill_ibfk_2" Association="Self.tb_bill_ibfk_2">
+            <End Role="tb_sale" EntitySet="tb_sale" />
+            <End Role="tb_bill" EntitySet="tb_bill" />
+          </AssociationSet>
+          <AssociationSet Name="tb_category_ibfk_1" Association="Self.tb_category_ibfk_1">
+            <End Role="tb_state" EntitySet="tb_state" />
+            <End Role="tb_category" EntitySet="tb_category" />
+          </AssociationSet>
+          <AssociationSet Name="tb_profile_ibfk_1" Association="Self.tb_profile_ibfk_1">
+            <End Role="tb_state" EntitySet="tb_state" />
+            <End Role="tb_profile" EntitySet="tb_profile" />
+          </AssociationSet>
+          <AssociationSet Name="tb_provider_ibfk_1" Association="Self.tb_provider_ibfk_1">
+            <End Role="tb_state" EntitySet="tb_state" />
+            <End Role="tb_provider" EntitySet="tb_provider" />
+          </AssociationSet>
+          <AssociationSet Name="tb_role_ibfk_1" Association="Self.tb_role_ibfk_1">
+            <End Role="tb_state" EntitySet="tb_state" />
+            <End Role="tb_role" EntitySet="tb_role" />
+          </AssociationSet>
+          <AssociationSet Name="tb_role_user_ibfk_1" Association="Self.tb_role_user_ibfk_1">
+            <End Role="tb_role" EntitySet="tb_role" />
+            <End Role="tb_role_user" EntitySet="tb_role_user" />
+          </AssociationSet>
+          <AssociationSet Name="tb_role_user_ibfk_2" Association="Self.tb_role_user_ibfk_2">
+            <End Role="tb_users" EntitySet="tb_users" />
+            <End Role="tb_role_user" EntitySet="tb_role_user" />
+          </AssociationSet>
+          <AssociationSet Name="tb_role_user_ibfk_3" Association="Self.tb_role_user_ibfk_3">
+            <End Role="tb_state" EntitySet="tb_state" />
+            <End Role="tb_role_user" EntitySet="tb_role_user" />
+          </AssociationSet>
+          <AssociationSet Name="tb_sale_detail_ibfk_1" Association="Self.tb_sale_detail_ibfk_1">
+            <End Role="tb_sale" EntitySet="tb_sale" />
+            <End Role="tb_sale_detail" EntitySet="tb_sale_detail" />
+          </AssociationSet>
+          <AssociationSet Name="tb_sale_detail_ibfk_2" Association="Self.tb_sale_detail_ibfk_2">
+            <End Role="tb_stock" EntitySet="tb_stock" />
+            <End Role="tb_sale_detail" EntitySet="tb_sale_detail" />
+          </AssociationSet>
+          <AssociationSet Name="tb_sale_ibfk_1" Association="Self.tb_sale_ibfk_1">
+            <End Role="tb_users" EntitySet="tb_users" />
+            <End Role="tb_sale" EntitySet="tb_sale" />
+          </AssociationSet>
+          <AssociationSet Name="tb_sale_ibfk_2" Association="Self.tb_sale_ibfk_2">
+            <End Role="tb_state" EntitySet="tb_state" />
+            <End Role="tb_sale" EntitySet="tb_sale" />
+          </AssociationSet>
+          <AssociationSet Name="tb_stock_ibfk_1" Association="Self.tb_stock_ibfk_1">
+            <End Role="tb_state" EntitySet="tb_state" />
+            <End Role="tb_stock" EntitySet="tb_stock" />
+          </AssociationSet>
+          <AssociationSet Name="tb_stock_ibfk_2" Association="Self.tb_stock_ibfk_2">
+            <End Role="tb_provider" EntitySet="tb_provider" />
+            <End Role="tb_stock" EntitySet="tb_stock" />
+          </AssociationSet>
+          <AssociationSet Name="tb_stock_ibfk_3" Association="Self.tb_stock_ibfk_3">
+            <End Role="tb_category" EntitySet="tb_category" />
+            <End Role="tb_stock" EntitySet="tb_stock" />
+          </AssociationSet>
+          <AssociationSet Name="tb_users_ibfk_1" Association="Self.tb_users_ibfk_1">
+            <End Role="tb_state" EntitySet="tb_state" />
+            <End Role="tb_users" EntitySet="tb_users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="bd_siugModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tb_access">
+          <Key>
+            <PropertyRef Name="acc_id" />
+          </Key>
+          <Property Name="acc_id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="acc_us_id" Type="Int64" Nullable="false" />
+          <Property Name="acc_date" Type="DateTime" />
+          <Property Name="acc_final_date" Type="DateTime" />
+          <NavigationProperty Name="tb_users" Relationship="Self.tb_access_ibfk_1" FromRole="tb_access" ToRole="tb_users" />
+        </EntityType>
+        <EntityType Name="tb_bill">
+          <Key>
+            <PropertyRef Name="bil_id" />
+          </Key>
+          <Property Name="bil_id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="bil_date" Type="DateTime" Nullable="false" />
+          <Property Name="bil_state" Type="Int64" />
+          <Property Name="bil_total" Type="Decimal" Nullable="false" />
+          <Property Name="bil_sal_id" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="tb_state" Relationship="Self.tb_bill_ibfk_1" FromRole="tb_bill" ToRole="tb_state" />
+          <NavigationProperty Name="tb_sale" Relationship="Self.tb_bill_ibfk_2" FromRole="tb_bill" ToRole="tb_sale" />
+        </EntityType>
+        <EntityType Name="tb_category">
+          <Key>
+            <PropertyRef Name="cat_id" />
+          </Key>
+          <Property Name="cat_id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cat_name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cat_descript" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cat_state" Type="Int64" Nullable="false" />
+          <Property Name="cat_createDate" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="tb_state" Relationship="Self.tb_category_ibfk_1" FromRole="tb_category" ToRole="tb_state" />
+          <NavigationProperty Name="tb_stock" Relationship="Self.tb_stock_ibfk_3" FromRole="tb_category" ToRole="tb_stock" />
+        </EntityType>
+        <EntityType Name="tb_clients">
+          <Key>
+            <PropertyRef Name="cli_id" />
+          </Key>
+          <Property Name="cli_id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cli_nit" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cli_name_company" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cli_name_contact" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cli_last_name_contact" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cli_phone" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cli_cel_phone" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cli_email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cli_date" Type="DateTime" Nullable="false" />
+          <Property Name="cli_state" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="tb_state" Relationship="Self.fk_tb_clients_tb_state" FromRole="tb_clients" ToRole="tb_state" />
+          <NavigationProperty Name="tb_sale" Relationship="Self.fk_tb_sale_tb_clients" FromRole="tb_clients" ToRole="tb_sale" />
+        </EntityType>
+        <EntityType Name="tb_profile">
+          <Key>
+            <PropertyRef Name="prof_id" />
+          </Key>
+          <Property Name="prof_id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="prof_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="prof_status" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="tb_state" Relationship="Self.tb_profile_ibfk_1" FromRole="tb_profile" ToRole="tb_state" />
+        </EntityType>
+        <EntityType Name="tb_provider">
+          <Key>
+            <PropertyRef Name="pro_id" />
+          </Key>
+          <Property Name="pro_id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pro_name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pro_nit" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pro_state" Type="Int64" Nullable="false" />
+          <Property Name="pro_contact" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pro_phone" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pro_email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tb_state" Relationship="Self.tb_provider_ibfk_1" FromRole="tb_provider" ToRole="tb_state" />
+          <NavigationProperty Name="tb_stock" Relationship="Self.tb_stock_ibfk_2" FromRole="tb_provider" ToRole="tb_stock" />
+        </EntityType>
+        <EntityType Name="tb_role">
+          <Key>
+            <PropertyRef Name="role_id" />
+          </Key>
+          <Property Name="role_id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="role_descript" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="role_status" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="tb_state" Relationship="Self.tb_role_ibfk_1" FromRole="tb_role" ToRole="tb_state" />
+          <NavigationProperty Name="tb_role_user" Relationship="Self.tb_role_user_ibfk_1" FromRole="tb_role" ToRole="tb_role_user" />
+        </EntityType>
+        <EntityType Name="tb_role_user">
+          <Key>
+            <PropertyRef Name="rolu_id" />
+          </Key>
+          <Property Name="rolu_id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rolu_role_id" Type="Int64" Nullable="false" />
+          <Property Name="rolu_user_id" Type="Int64" Nullable="false" />
+          <Property Name="rolu_lastUpdate" Type="DateTime" />
+          <Property Name="rolu_status" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="tb_role" Relationship="Self.tb_role_user_ibfk_1" FromRole="tb_role_user" ToRole="tb_role" />
+          <NavigationProperty Name="tb_users" Relationship="Self.tb_role_user_ibfk_2" FromRole="tb_role_user" ToRole="tb_users" />
+          <NavigationProperty Name="tb_state" Relationship="Self.tb_role_user_ibfk_3" FromRole="tb_role_user" ToRole="tb_state" />
+        </EntityType>
+        <EntityType Name="tb_sale">
+          <Key>
+            <PropertyRef Name="sal_id" />
+          </Key>
+          <Property Name="sal_id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sal_userId" Type="Int64" Nullable="false" />
+          <Property Name="sal_cli_id" Type="Int64" Nullable="false" />
+          <Property Name="sal_date" Type="DateTime" Nullable="false" />
+          <Property Name="sal_state" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="tb_bill" Relationship="Self.tb_bill_ibfk_2" FromRole="tb_sale" ToRole="tb_bill" />
+          <NavigationProperty Name="tb_clients" Relationship="Self.fk_tb_sale_tb_clients" FromRole="tb_sale" ToRole="tb_clients" />
+          <NavigationProperty Name="tb_sale_detail" Relationship="Self.tb_sale_detail_ibfk_1" FromRole="tb_sale" ToRole="tb_sale_detail" />
+          <NavigationProperty Name="tb_users" Relationship="Self.tb_sale_ibfk_1" FromRole="tb_sale" ToRole="tb_users" />
+          <NavigationProperty Name="tb_state" Relationship="Self.tb_sale_ibfk_2" FromRole="tb_sale" ToRole="tb_state" />
+        </EntityType>
+        <EntityType Name="tb_sale_detail">
+          <Key>
+            <PropertyRef Name="sade_id" />
+          </Key>
+          <Property Name="sade_id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sade_sale_id" Type="Int64" Nullable="false" />
+          <Property Name="sade_stock_id" Type="Int64" Nullable="false" />
+          <Property Name="sade_quantity" Type="Int64" Nullable="false" />
+          <Property Name="sade_subtotal" Type="Decimal" Nullable="false" />
+          <NavigationProperty Name="tb_sale" Relationship="Self.tb_sale_detail_ibfk_1" FromRole="tb_sale_detail" ToRole="tb_sale" />
+          <NavigationProperty Name="tb_stock" Relationship="Self.tb_sale_detail_ibfk_2" FromRole="tb_sale_detail" ToRole="tb_stock" />
+        </EntityType>
+        <EntityType Name="tb_state">
+          <Key>
+            <PropertyRef Name="sta_id" />
+          </Key>
+          <Property Name="sta_id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sta_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tb_bill" Relationship="Self.tb_bill_ibfk_1" FromRole="tb_state" ToRole="tb_bill" />
+          <NavigationProperty Name="tb_category" Relationship="Self.tb_category_ibfk_1" FromRole="tb_state" ToRole="tb_category" />
+          <NavigationProperty Name="tb_clients" Relationship="Self.fk_tb_clients_tb_state" FromRole="tb_state" ToRole="tb_clients" />
+          <NavigationProperty Name="tb_profile" Relationship="Self.tb_profile_ibfk_1" FromRole="tb_state" ToRole="tb_profile" />
+          <NavigationProperty Name="tb_provider" Relationship="Self.tb_provider_ibfk_1" FromRole="tb_state" ToRole="tb_provider" />
+          <NavigationProperty Name="tb_role" Relationship="Self.tb_role_ibfk_1" FromRole="tb_state" ToRole="tb_role" />
+          <NavigationProperty Name="tb_role_user" Relationship="Self.tb_role_user_ibfk_3" FromRole="tb_state" ToRole="tb_role_user" />
+          <NavigationProperty Name="tb_sale" Relationship="Self.tb_sale_ibfk_2" FromRole="tb_state" ToRole="tb_sale" />
+          <NavigationProperty Name="tb_stock" Relationship="Self.tb_stock_ibfk_1" FromRole="tb_state" ToRole="tb_stock" />
+          <NavigationProperty Name="tb_users" Relationship="Self.tb_users_ibfk_1" FromRole="tb_state" ToRole="tb_users" />
+        </EntityType>
+        <EntityType Name="tb_stock">
+          <Key>
+            <PropertyRef Name="sto_id" />
+          </Key>
+          <Property Name="sto_id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sto_descript" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sto_state" Type="Int64" Nullable="false" />
+          <Property Name="sto_avaible" Type="Int64" Nullable="false" />
+          <Property Name="sto_buyPrice" Type="Decimal" Nullable="false" />
+          <Property Name="sto_salePrice" Type="Decimal" Nullable="false" />
+          <Property Name="sto_url" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="sto_provId" Type="Int64" Nullable="false" />
+          <Property Name="sto_category" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="tb_category" Relationship="Self.tb_stock_ibfk_3" FromRole="tb_stock" ToRole="tb_category" />
+          <NavigationProperty Name="tb_provider" Relationship="Self.tb_stock_ibfk_2" FromRole="tb_stock" ToRole="tb_provider" />
+          <NavigationProperty Name="tb_sale_detail" Relationship="Self.tb_sale_detail_ibfk_2" FromRole="tb_stock" ToRole="tb_sale_detail" />
+          <NavigationProperty Name="tb_state" Relationship="Self.tb_stock_ibfk_1" FromRole="tb_stock" ToRole="tb_state" />
+        </EntityType>
+        <EntityType Name="tb_users">
+          <Key>
+            <PropertyRef Name="us_id" />
+          </Key>
+          <Property Name="us_id" Type="Int64" Nullable="false" />
+          <Property Name="us_name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="us_lastname" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="us_phone" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="us_email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="us_pass" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="us_cityId" Type="Int64" Nullable="false" />
+          <Property Name="us_createDate" Type="DateTime" Nullable="false" />
+          <Property Name="us_state" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="tb_access" Relationship="Self.tb_access_ibfk_1" FromRole="tb_users" ToRole="tb_access" />
+          <NavigationProperty Name="tb_role_user" Relationship="Self.tb_role_user_ibfk_2" FromRole="tb_users" ToRole="tb_role_user" />
+          <NavigationProperty Name="tb_sale" Relationship="Self.tb_sale_ibfk_1" FromRole="tb_users" ToRole="tb_sale" />
+          <NavigationProperty Name="tb_state" Relationship="Self.tb_users_ibfk_1" FromRole="tb_users" ToRole="tb_state" />
+        </EntityType>
+        <Association Name="tb_access_ibfk_1">
+          <End Role="tb_users" Type="Self.tb_users" Multiplicity="1" />
+          <End Role="tb_access" Type="Self.tb_access" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_users">
+              <PropertyRef Name="us_id" />
+            </Principal>
+            <Dependent Role="tb_access">
+              <PropertyRef Name="acc_us_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tb_bill_ibfk_1">
+          <End Role="tb_state" Type="Self.tb_state" Multiplicity="0..1" />
+          <End Role="tb_bill" Type="Self.tb_bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_state">
+              <PropertyRef Name="sta_id" />
+            </Principal>
+            <Dependent Role="tb_bill">
+              <PropertyRef Name="bil_state" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tb_bill_ibfk_2">
+          <End Role="tb_sale" Type="Self.tb_sale" Multiplicity="1" />
+          <End Role="tb_bill" Type="Self.tb_bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_sale">
+              <PropertyRef Name="sal_id" />
+            </Principal>
+            <Dependent Role="tb_bill">
+              <PropertyRef Name="bil_sal_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tb_category_ibfk_1">
+          <End Role="tb_state" Type="Self.tb_state" Multiplicity="1" />
+          <End Role="tb_category" Type="Self.tb_category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_state">
+              <PropertyRef Name="sta_id" />
+            </Principal>
+            <Dependent Role="tb_category">
+              <PropertyRef Name="cat_state" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tb_stock_ibfk_3">
+          <End Role="tb_category" Type="Self.tb_category" Multiplicity="1" />
+          <End Role="tb_stock" Type="Self.tb_stock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_category">
+              <PropertyRef Name="cat_id" />
+            </Principal>
+            <Dependent Role="tb_stock">
+              <PropertyRef Name="sto_category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tb_clients_tb_state">
+          <End Role="tb_state" Type="Self.tb_state" Multiplicity="1" />
+          <End Role="tb_clients" Type="Self.tb_clients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_state">
+              <PropertyRef Name="sta_id" />
+            </Principal>
+            <Dependent Role="tb_clients">
+              <PropertyRef Name="cli_state" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tb_sale_tb_clients">
+          <End Role="tb_clients" Type="Self.tb_clients" Multiplicity="1" />
+          <End Role="tb_sale" Type="Self.tb_sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_clients">
+              <PropertyRef Name="cli_id" />
+            </Principal>
+            <Dependent Role="tb_sale">
+              <PropertyRef Name="sal_cli_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tb_profile_ibfk_1">
+          <End Role="tb_state" Type="Self.tb_state" Multiplicity="1" />
+          <End Role="tb_profile" Type="Self.tb_profile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_state">
+              <PropertyRef Name="sta_id" />
+            </Principal>
+            <Dependent Role="tb_profile">
+              <PropertyRef Name="prof_status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tb_provider_ibfk_1">
+          <End Role="tb_state" Type="Self.tb_state" Multiplicity="1" />
+          <End Role="tb_provider" Type="Self.tb_provider" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_state">
+              <PropertyRef Name="sta_id" />
+            </Principal>
+            <Dependent Role="tb_provider">
+              <PropertyRef Name="pro_state" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tb_stock_ibfk_2">
+          <End Role="tb_provider" Type="Self.tb_provider" Multiplicity="1" />
+          <End Role="tb_stock" Type="Self.tb_stock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_provider">
+              <PropertyRef Name="pro_id" />
+            </Principal>
+            <Dependent Role="tb_stock">
+              <PropertyRef Name="sto_provId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tb_role_ibfk_1">
+          <End Role="tb_state" Type="Self.tb_state" Multiplicity="1" />
+          <End Role="tb_role" Type="Self.tb_role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_state">
+              <PropertyRef Name="sta_id" />
+            </Principal>
+            <Dependent Role="tb_role">
+              <PropertyRef Name="role_status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tb_role_user_ibfk_1">
+          <End Role="tb_role" Type="Self.tb_role" Multiplicity="1" />
+          <End Role="tb_role_user" Type="Self.tb_role_user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_role">
+              <PropertyRef Name="role_id" />
+            </Principal>
+            <Dependent Role="tb_role_user">
+              <PropertyRef Name="rolu_role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tb_role_user_ibfk_2">
+          <End Role="tb_users" Type="Self.tb_users" Multiplicity="1" />
+          <End Role="tb_role_user" Type="Self.tb_role_user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_users">
+              <PropertyRef Name="us_id" />
+            </Principal>
+            <Dependent Role="tb_role_user">
+              <PropertyRef Name="rolu_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tb_role_user_ibfk_3">
+          <End Role="tb_state" Type="Self.tb_state" Multiplicity="1" />
+          <End Role="tb_role_user" Type="Self.tb_role_user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_state">
+              <PropertyRef Name="sta_id" />
+            </Principal>
+            <Dependent Role="tb_role_user">
+              <PropertyRef Name="rolu_status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tb_sale_detail_ibfk_1">
+          <End Role="tb_sale" Type="Self.tb_sale" Multiplicity="1" />
+          <End Role="tb_sale_detail" Type="Self.tb_sale_detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_sale">
+              <PropertyRef Name="sal_id" />
+            </Principal>
+            <Dependent Role="tb_sale_detail">
+              <PropertyRef Name="sade_sale_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tb_sale_ibfk_1">
+          <End Role="tb_users" Type="Self.tb_users" Multiplicity="1" />
+          <End Role="tb_sale" Type="Self.tb_sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_users">
+              <PropertyRef Name="us_id" />
+            </Principal>
+            <Dependent Role="tb_sale">
+              <PropertyRef Name="sal_userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tb_sale_ibfk_2">
+          <End Role="tb_state" Type="Self.tb_state" Multiplicity="1" />
+          <End Role="tb_sale" Type="Self.tb_sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_state">
+              <PropertyRef Name="sta_id" />
+            </Principal>
+            <Dependent Role="tb_sale">
+              <PropertyRef Name="sal_state" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tb_sale_detail_ibfk_2">
+          <End Role="tb_stock" Type="Self.tb_stock" Multiplicity="1" />
+          <End Role="tb_sale_detail" Type="Self.tb_sale_detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_stock">
+              <PropertyRef Name="sto_id" />
+            </Principal>
+            <Dependent Role="tb_sale_detail">
+              <PropertyRef Name="sade_stock_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tb_stock_ibfk_1">
+          <End Role="tb_state" Type="Self.tb_state" Multiplicity="1" />
+          <End Role="tb_stock" Type="Self.tb_stock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_state">
+              <PropertyRef Name="sta_id" />
+            </Principal>
+            <Dependent Role="tb_stock">
+              <PropertyRef Name="sto_state" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tb_users_ibfk_1">
+          <End Role="tb_state" Type="Self.tb_state" Multiplicity="1" />
+          <End Role="tb_users" Type="Self.tb_users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_state">
+              <PropertyRef Name="sta_id" />
+            </Principal>
+            <Dependent Role="tb_users">
+              <PropertyRef Name="us_state" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="bd_siugEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tb_access" EntityType="Self.tb_access" />
+          <EntitySet Name="tb_bill" EntityType="Self.tb_bill" />
+          <EntitySet Name="tb_category" EntityType="Self.tb_category" />
+          <EntitySet Name="tb_clients" EntityType="Self.tb_clients" />
+          <EntitySet Name="tb_profile" EntityType="Self.tb_profile" />
+          <EntitySet Name="tb_provider" EntityType="Self.tb_provider" />
+          <EntitySet Name="tb_role" EntityType="Self.tb_role" />
+          <EntitySet Name="tb_role_user" EntityType="Self.tb_role_user" />
+          <EntitySet Name="tb_sale" EntityType="Self.tb_sale" />
+          <EntitySet Name="tb_sale_detail" EntityType="Self.tb_sale_detail" />
+          <EntitySet Name="tb_state" EntityType="Self.tb_state" />
+          <EntitySet Name="tb_stock" EntityType="Self.tb_stock" />
+          <EntitySet Name="tb_users" EntityType="Self.tb_users" />
+          <AssociationSet Name="tb_access_ibfk_1" Association="Self.tb_access_ibfk_1">
+            <End Role="tb_users" EntitySet="tb_users" />
+            <End Role="tb_access" EntitySet="tb_access" />
+          </AssociationSet>
+          <AssociationSet Name="tb_bill_ibfk_1" Association="Self.tb_bill_ibfk_1">
+            <End Role="tb_state" EntitySet="tb_state" />
+            <End Role="tb_bill" EntitySet="tb_bill" />
+          </AssociationSet>
+          <AssociationSet Name="tb_bill_ibfk_2" Association="Self.tb_bill_ibfk_2">
+            <End Role="tb_sale" EntitySet="tb_sale" />
+            <End Role="tb_bill" EntitySet="tb_bill" />
+          </AssociationSet>
+          <AssociationSet Name="tb_category_ibfk_1" Association="Self.tb_category_ibfk_1">
+            <End Role="tb_state" EntitySet="tb_state" />
+            <End Role="tb_category" EntitySet="tb_category" />
+          </AssociationSet>
+          <AssociationSet Name="tb_stock_ibfk_3" Association="Self.tb_stock_ibfk_3">
+            <End Role="tb_category" EntitySet="tb_category" />
+            <End Role="tb_stock" EntitySet="tb_stock" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tb_clients_tb_state" Association="Self.fk_tb_clients_tb_state">
+            <End Role="tb_state" EntitySet="tb_state" />
+            <End Role="tb_clients" EntitySet="tb_clients" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tb_sale_tb_clients" Association="Self.fk_tb_sale_tb_clients">
+            <End Role="tb_clients" EntitySet="tb_clients" />
+            <End Role="tb_sale" EntitySet="tb_sale" />
+          </AssociationSet>
+          <AssociationSet Name="tb_profile_ibfk_1" Association="Self.tb_profile_ibfk_1">
+            <End Role="tb_state" EntitySet="tb_state" />
+            <End Role="tb_profile" EntitySet="tb_profile" />
+          </AssociationSet>
+          <AssociationSet Name="tb_provider_ibfk_1" Association="Self.tb_provider_ibfk_1">
+            <End Role="tb_state" EntitySet="tb_state" />
+            <End Role="tb_provider" EntitySet="tb_provider" />
+          </AssociationSet>
+          <AssociationSet Name="tb_stock_ibfk_2" Association="Self.tb_stock_ibfk_2">
+            <End Role="tb_provider" EntitySet="tb_provider" />
+            <End Role="tb_stock" EntitySet="tb_stock" />
+          </AssociationSet>
+          <AssociationSet Name="tb_role_ibfk_1" Association="Self.tb_role_ibfk_1">
+            <End Role="tb_state" EntitySet="tb_state" />
+            <End Role="tb_role" EntitySet="tb_role" />
+          </AssociationSet>
+          <AssociationSet Name="tb_role_user_ibfk_1" Association="Self.tb_role_user_ibfk_1">
+            <End Role="tb_role" EntitySet="tb_role" />
+            <End Role="tb_role_user" EntitySet="tb_role_user" />
+          </AssociationSet>
+          <AssociationSet Name="tb_role_user_ibfk_2" Association="Self.tb_role_user_ibfk_2">
+            <End Role="tb_users" EntitySet="tb_users" />
+            <End Role="tb_role_user" EntitySet="tb_role_user" />
+          </AssociationSet>
+          <AssociationSet Name="tb_role_user_ibfk_3" Association="Self.tb_role_user_ibfk_3">
+            <End Role="tb_state" EntitySet="tb_state" />
+            <End Role="tb_role_user" EntitySet="tb_role_user" />
+          </AssociationSet>
+          <AssociationSet Name="tb_sale_detail_ibfk_1" Association="Self.tb_sale_detail_ibfk_1">
+            <End Role="tb_sale" EntitySet="tb_sale" />
+            <End Role="tb_sale_detail" EntitySet="tb_sale_detail" />
+          </AssociationSet>
+          <AssociationSet Name="tb_sale_ibfk_1" Association="Self.tb_sale_ibfk_1">
+            <End Role="tb_users" EntitySet="tb_users" />
+            <End Role="tb_sale" EntitySet="tb_sale" />
+          </AssociationSet>
+          <AssociationSet Name="tb_sale_ibfk_2" Association="Self.tb_sale_ibfk_2">
+            <End Role="tb_state" EntitySet="tb_state" />
+            <End Role="tb_sale" EntitySet="tb_sale" />
+          </AssociationSet>
+          <AssociationSet Name="tb_sale_detail_ibfk_2" Association="Self.tb_sale_detail_ibfk_2">
+            <End Role="tb_stock" EntitySet="tb_stock" />
+            <End Role="tb_sale_detail" EntitySet="tb_sale_detail" />
+          </AssociationSet>
+          <AssociationSet Name="tb_stock_ibfk_1" Association="Self.tb_stock_ibfk_1">
+            <End Role="tb_state" EntitySet="tb_state" />
+            <End Role="tb_stock" EntitySet="tb_stock" />
+          </AssociationSet>
+          <AssociationSet Name="tb_users_ibfk_1" Association="Self.tb_users_ibfk_1">
+            <End Role="tb_state" EntitySet="tb_state" />
+            <End Role="tb_users" EntitySet="tb_users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="bd_siugModelStoreContainer" CdmEntityContainer="bd_siugEntities">
+          <EntitySetMapping Name="tb_access">
+            <EntityTypeMapping TypeName="bd_siugModel.tb_access">
+              <MappingFragment StoreEntitySet="tb_access">
+                <ScalarProperty Name="acc_id" ColumnName="acc_id" />
+                <ScalarProperty Name="acc_us_id" ColumnName="acc_us_id" />
+                <ScalarProperty Name="acc_date" ColumnName="acc_date" />
+                <ScalarProperty Name="acc_final_date" ColumnName="acc_final_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_bill">
+            <EntityTypeMapping TypeName="bd_siugModel.tb_bill">
+              <MappingFragment StoreEntitySet="tb_bill">
+                <ScalarProperty Name="bil_id" ColumnName="bil_id" />
+                <ScalarProperty Name="bil_date" ColumnName="bil_date" />
+                <ScalarProperty Name="bil_state" ColumnName="bil_state" />
+                <ScalarProperty Name="bil_total" ColumnName="bil_total" />
+                <ScalarProperty Name="bil_sal_id" ColumnName="bil_sal_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_category">
+            <EntityTypeMapping TypeName="bd_siugModel.tb_category">
+              <MappingFragment StoreEntitySet="tb_category">
+                <ScalarProperty Name="cat_id" ColumnName="cat_id" />
+                <ScalarProperty Name="cat_name" ColumnName="cat_name" />
+                <ScalarProperty Name="cat_descript" ColumnName="cat_descript" />
+                <ScalarProperty Name="cat_state" ColumnName="cat_state" />
+                <ScalarProperty Name="cat_createDate" ColumnName="cat_createDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_clients">
+            <EntityTypeMapping TypeName="bd_siugModel.tb_clients">
+              <MappingFragment StoreEntitySet="tb_clients">
+                <ScalarProperty Name="cli_id" ColumnName="cli_id" />
+                <ScalarProperty Name="cli_nit" ColumnName="cli_nit" />
+                <ScalarProperty Name="cli_name_company" ColumnName="cli_name_company" />
+                <ScalarProperty Name="cli_name_contact" ColumnName="cli_name_contact" />
+                <ScalarProperty Name="cli_last_name_contact" ColumnName="cli_last_name_contact" />
+                <ScalarProperty Name="cli_phone" ColumnName="cli_phone" />
+                <ScalarProperty Name="cli_cel_phone" ColumnName="cli_cel_phone" />
+                <ScalarProperty Name="cli_email" ColumnName="cli_email" />
+                <ScalarProperty Name="cli_date" ColumnName="cli_date" />
+                <ScalarProperty Name="cli_state" ColumnName="cli_state" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_profile">
+            <EntityTypeMapping TypeName="bd_siugModel.tb_profile">
+              <MappingFragment StoreEntitySet="tb_profile">
+                <ScalarProperty Name="prof_id" ColumnName="prof_id" />
+                <ScalarProperty Name="prof_name" ColumnName="prof_name" />
+                <ScalarProperty Name="prof_status" ColumnName="prof_status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_provider">
+            <EntityTypeMapping TypeName="bd_siugModel.tb_provider">
+              <MappingFragment StoreEntitySet="tb_provider">
+                <ScalarProperty Name="pro_id" ColumnName="pro_id" />
+                <ScalarProperty Name="pro_name" ColumnName="pro_name" />
+                <ScalarProperty Name="pro_nit" ColumnName="pro_nit" />
+                <ScalarProperty Name="pro_state" ColumnName="pro_state" />
+                <ScalarProperty Name="pro_contact" ColumnName="pro_contact" />
+                <ScalarProperty Name="pro_phone" ColumnName="pro_phone" />
+                <ScalarProperty Name="pro_email" ColumnName="pro_email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_role">
+            <EntityTypeMapping TypeName="bd_siugModel.tb_role">
+              <MappingFragment StoreEntitySet="tb_role">
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+                <ScalarProperty Name="role_descript" ColumnName="role_descript" />
+                <ScalarProperty Name="role_status" ColumnName="role_status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_role_user">
+            <EntityTypeMapping TypeName="bd_siugModel.tb_role_user">
+              <MappingFragment StoreEntitySet="tb_role_user">
+                <ScalarProperty Name="rolu_id" ColumnName="rolu_id" />
+                <ScalarProperty Name="rolu_role_id" ColumnName="rolu_role_id" />
+                <ScalarProperty Name="rolu_user_id" ColumnName="rolu_user_id" />
+                <ScalarProperty Name="rolu_lastUpdate" ColumnName="rolu_lastUpdate" />
+                <ScalarProperty Name="rolu_status" ColumnName="rolu_status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_sale">
+            <EntityTypeMapping TypeName="bd_siugModel.tb_sale">
+              <MappingFragment StoreEntitySet="tb_sale">
+                <ScalarProperty Name="sal_id" ColumnName="sal_id" />
+                <ScalarProperty Name="sal_userId" ColumnName="sal_userId" />
+                <ScalarProperty Name="sal_cli_id" ColumnName="sal_cli_id" />
+                <ScalarProperty Name="sal_date" ColumnName="sal_date" />
+                <ScalarProperty Name="sal_state" ColumnName="sal_state" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_sale_detail">
+            <EntityTypeMapping TypeName="bd_siugModel.tb_sale_detail">
+              <MappingFragment StoreEntitySet="tb_sale_detail">
+                <ScalarProperty Name="sade_id" ColumnName="sade_id" />
+                <ScalarProperty Name="sade_sale_id" ColumnName="sade_sale_id" />
+                <ScalarProperty Name="sade_stock_id" ColumnName="sade_stock_id" />
+                <ScalarProperty Name="sade_quantity" ColumnName="sade_quantity" />
+                <ScalarProperty Name="sade_subtotal" ColumnName="sade_subtotal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_state">
+            <EntityTypeMapping TypeName="bd_siugModel.tb_state">
+              <MappingFragment StoreEntitySet="tb_state">
+                <ScalarProperty Name="sta_id" ColumnName="sta_id" />
+                <ScalarProperty Name="sta_name" ColumnName="sta_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_stock">
+            <EntityTypeMapping TypeName="bd_siugModel.tb_stock">
+              <MappingFragment StoreEntitySet="tb_stock">
+                <ScalarProperty Name="sto_id" ColumnName="sto_id" />
+                <ScalarProperty Name="sto_descript" ColumnName="sto_descript" />
+                <ScalarProperty Name="sto_state" ColumnName="sto_state" />
+                <ScalarProperty Name="sto_avaible" ColumnName="sto_avaible" />
+                <ScalarProperty Name="sto_buyPrice" ColumnName="sto_buyPrice" />
+                <ScalarProperty Name="sto_salePrice" ColumnName="sto_salePrice" />
+                <ScalarProperty Name="sto_url" ColumnName="sto_url" />
+                <ScalarProperty Name="sto_provId" ColumnName="sto_provId" />
+                <ScalarProperty Name="sto_category" ColumnName="sto_category" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_users">
+            <EntityTypeMapping TypeName="bd_siugModel.tb_users">
+              <MappingFragment StoreEntitySet="tb_users">
+                <ScalarProperty Name="us_id" ColumnName="us_id" />
+                <ScalarProperty Name="us_name" ColumnName="us_name" />
+                <ScalarProperty Name="us_lastname" ColumnName="us_lastname" />
+                <ScalarProperty Name="us_phone" ColumnName="us_phone" />
+                <ScalarProperty Name="us_email" ColumnName="us_email" />
+                <ScalarProperty Name="us_pass" ColumnName="us_pass" />
+                <ScalarProperty Name="us_cityId" ColumnName="us_cityId" />
+                <ScalarProperty Name="us_createDate" ColumnName="us_createDate" />
+                <ScalarProperty Name="us_state" ColumnName="us_state" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

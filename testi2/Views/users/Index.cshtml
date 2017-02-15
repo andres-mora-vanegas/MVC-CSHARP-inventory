@@ -1,0 +1,70 @@
+﻿@model IEnumerable<testi2.Context.tb_users>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Reporte de usuarios</h2>
+
+<p>
+    @Html.ActionLink("Crear nuevo", "Create", new { id = "" }, new { @class = "btn btn-info" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.Label("description", "Nombres")
+        </th>
+        <th>
+            @Html.Label("description", "Apellidos")
+        </th>
+        <th>
+            @Html.Label("description", "Teléfono")
+        </th>
+        <th>
+            @Html.Label("description", "Email")
+        </th>
+        <th>
+            @Html.Label("description", "Ciudad")
+        </th>
+        <th>
+            @Html.Label("description", "Fecha de creación")
+        </th>
+        <th>
+            @Html.Label("description", "Estado")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.us_name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.us_lastname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.us_phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.us_email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.us_cityId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.us_createDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tb_state.sta_name)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.us_id }) |
+                @Html.ActionLink("Detalles", "Details", new { id = item.us_id }) |
+                @Html.ActionLink("Eliminar", "Delete", new { id = item.us_id })
+            </td>
+        </tr>
+    }
+
+</table>

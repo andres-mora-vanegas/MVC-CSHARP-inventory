@@ -1,0 +1,56 @@
+﻿@model testi2.Context.tb_sale_detail
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>tb_sale_detail</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.sade_quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sade_quantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.sade_subtotal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sade_subtotal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tb_sale.sal_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tb_sale.sal_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tb_stock.sto_descript)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tb_stock.sto_descript)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

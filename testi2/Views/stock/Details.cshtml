@@ -1,0 +1,82 @@
+﻿@model testi2.Context.tb_stock
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tb_stock</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.sto_descript)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sto_descript)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.sto_avaible)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sto_avaible)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.sto_buyPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sto_buyPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.sto_salePrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sto_salePrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.sto_url)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sto_url)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tb_category.cat_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tb_category.cat_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tb_provider.pro_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tb_provider.pro_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tb_state.sta_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tb_state.sta_name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.sto_id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

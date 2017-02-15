@@ -1,0 +1,271 @@
+﻿@model IEnumerable<testi2.Context.tb_sale_detail>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<style>
+    td {
+        margin: 3px;
+        padding: 10px;
+    }
+
+    #info {
+        background: #F5F5F5;
+        padding: 15px;
+        width: 70%;
+    }
+
+    .preimg {
+        width: 25px;
+        height: 25px;
+        cursor: pointer;
+    }
+</style>
+
+<div id="contenidoVenta" align="center">
+    <h1>Nueva venta</h1>
+    <form method="post" action="sale/sale" id="bill" name="bill" >
+        <input type="hidden" name="totalBill" />
+        <div id="userList" align="center" class="usuarios">
+            <label>Seleccione los productos y la cantidad</label>
+            <div class="container" id="info">
+                <input type="hidden" name="idUser" value="@ViewBag.idUser" id="idUser" />
+                <input type="hidden" name="json" id="json" />
+                <input type="hidden" name="send" value="Facturar" />
+                <br />
+                <div class="row">
+                    <div class="col-xs-6">Selecciona el cliente</div>
+                    <div class="col-xs-6">@Html.DropDownList("cliId", ViewBag.clientId as SelectList, "Seleccione un cliente", htmlAttributes: new { @class = "form-control " })</div>
+                    <label id="error"></label>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">Producto</div>
+                    <div class="col-xs-6">Cantidad</div>
+                    <div class="col-xs-6">@Html.DropDownList("stockId", ViewBag.productId as SelectList, "Seleccione un producto", htmlAttributes: new { @class = "form-control stockId ajaxProcessSingle", @dataAction = "stockQuantity", @dataOwner = "sale", @dataBefore = "quantityOption" })</div>
+                    <div class="col-xs-6 hidden">@Html.DropDownList("stockPrice", ViewBag.productList as SelectList, "Seleccione un producto", htmlAttributes: new { @class = "form-control stockPrice" })</div>
+                    <div class="col-xs-6">@Html.DropDownList("productQuantity", ViewBag.productQuantity as SelectList, "Seleccione la cantidad", new { @class = "form-control", @id = "DropDownListQuantity" })</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">Precio unitario</div>
+                    <div class="col-xs-6">Subtotal</div>
+                    <div class="col-xs-6">
+                        <input type="text" class="form-control" readonly name="unitary" id="unitary" />
+                    </div>
+                    <div class="col-xs-6">
+                        <input type="text" class="form-control" readonly name="subtotal" id="subtotal" />
+                    </div>
+
+                    <div class="col-xs-6">
+                        <img class="preimg addCar" alt="agregar" title="Agregar producto" src="~/assets/images/add.png" />
+                    </div>
+                    <div class="col-xs-6">
+                        <img class="preimg" id="cancell" alt="cancelar" title="Cancelar transacción" src="~/assets/images/cancell.png" />
+                    </div>
+                </div>
+                <hr />
+                <div id="bill" style="">
+                    <label>Resumen de articulos seleccionados</label>
+                    <table class="table-bordered" id="billif">
+                        <thead>
+                            <tr>
+                                <td>
+                                    auto
+                                </td>
+                                <td>
+                                    Id
+                                </td>
+                                <td>
+                                    Producto
+                                </td>
+                                <td>
+                                    Cantidad
+                                </td>
+                                <td>
+                                    Precio<br /> unitario
+                                </td>
+                                <td>
+                                    Precio <br /> total
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <table>                       
+                        <tr>
+                            <td style="border:none">
+                                Total
+                            </td>
+                            <td style="border:none" id="totalSale">
+                                
+                            </td>                            
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<br />
+<center>
+    <span class="btn btn-success btn-lg billFinal ajaxProcessSingleC" id='' dataAction="sale" dataOwner="sale" data-toggle="modal" data-target="#myModal" title="Confirmar venta" id="doIt">Facturar</span>
+    <hr />
+    <span class="viewArray btn btn-info">Ver array</span>
+</center>
+<br />
+<script>
+    var inventory = "@ViewBag.Message";
+    var totalBuy = [];
+    var auto = 0;
+
+    function quantityOption(x) {
+        var json = JSON.parse(x);
+        var quantity = $("#DropDownListQuantity");
+        if (json.state == "ok") {
+            quantity.empty(); // remove any existing options
+            for (var i = 1; i <= parseInt(json.answer) ; i++) {
+                quantity.append($('<option>', {
+                    value: i,
+                    text: i
+                }));
+            }
+        }
+    }
+
+    $(".stockId").on("change", function () {
+        var id = $(this).val();
+        var price = $(".stockPrice option[value='" + id + "']").text()
+        $("#unitary").val(price);
+    })
+
+    $("#DropDownListQuantity").on("change", function () {
+        var howMany = $(this).val();
+        var price = ($("#unitary").val() * howMany);
+        $("#subtotal").val(price);
+    });
+
+    $(".addCar").on("click", function () {
+        var productId = $(".stockId").val();
+        var productDescription = $(".stockId option:selected").text();
+        var productQuantity = $("#DropDownListQuantity").val();
+        var productUnitary = $("#unitary").val();
+        var productSubtotal = $("#subtotal").val();
+        var removeRow = "<img src='/assets/images/cancell.png' class='preimg removeRow' />"
+
+        if (productUnitary != '' && productSubtotal != '') {
+            var fullTextBoxes = $('input:text').filter(function () { return this.value != ""; });
+            fullTextBoxes.each(function () {
+                $(this).css({
+                    "background": "initial",
+                    "color": "initial",
+                });
+            });
+            totalBuy.push([productId, productDescription, productQuantity]);
+            $("#billif").find('tbody').append($('<tr><td class="">' + auto + '</td><td class="">' + productId + '</td><td>' + productDescription + '</td><td>' + productQuantity + '</td><td>' + productUnitary + '</td><td>' + productSubtotal + '</td><td>' + removeRow + '</td></tr>'));
+            auto++;
+            $("#unitary,#subtotal").val("");
+            $(".stockId option[value='" + productId + "']").prop('disabled', true);
+            $("#totalSale").html();
+        }
+        else {
+            var emptyTextBoxes = $('input:text').filter(function () { return this.value == ""; });
+            emptyTextBoxes.each(function () {
+                $(this).css({
+                    "background": "red",
+                    "color": "white",
+                });
+            });
+        }
+
+    });
+
+    function arrSum() {
+        for (var x = 0; x < totalBuy.length; x++) {
+            for (var i = 0; i < totalBuy[x].length; i++) {
+                console.log(totalBuy[x][i]);
+            }
+        }
+    }
+
+    $(document).on("click", ".removeRow", function () {
+        //elegimos la posición del array a eliminar
+        var idRemove = $(this).parent().parent().children("td:eq(0)").html();
+        //eliminamos la posición
+        totalBuy.splice(idRemove, 1);
+        //quitamos la fila de la tabla detalle        
+        $(this).parent().parent().fadeOut();
+        //obtenemos el id del producto a habilitar en el desplegable 
+        idRemove = $(this).parent().parent().children("td:eq(1)").html();
+        //habilitamos la opción del desplegable
+        $(".stockId option[value='" + idRemove + "']").removeProp('disabled');
+    });
+
+    $(document).on("click", ".billFinal", function () {
+        var json = JSON.stringify(totalBuy);
+        $(this).attr("id",json);        
+    })
+
+    $(document).on("click", ".viewArray", function () {
+        console.log(totalBuy);
+        arrSum();
+    });
+
+    $(".ajaxProcessSingle").change(function () {
+        var datax = {};
+        datax.id = $(this).val();
+        datax.action = $(this).attr("dataAction");
+        datax.owner = $(this).attr("dataOwner");
+        if (datax.id != "") {
+            var uri = "/" + datax.owner + "/" + datax.action;
+            if ($(this).attr("dataBefore") != null) {
+                var a = $(this).attr("dataBefore");
+                $.ajax({
+                    url: uri,
+                    type: 'post',
+                    data: datax
+                }).done(function (response) {
+                    window[a](response)
+                });
+            }
+            else {
+                $.ajax({
+                    url: uri,
+                    type: 'post',
+                    data: datax
+                }).done(function (response) {
+                    console.log(response);
+                    //$("#quantityInfo").html(response);
+                });
+            }
+        }
+    })
+
+    $(document).on("click", ".ajaxProcessSingleC", function () {
+        var datax = {};        
+        datax.id = $(this).attr("id");
+        datax.action = $(this).attr("dataAction");
+        datax.owner = $(this).attr("dataOwner");
+        if (datax.id != "") {                        
+            var uri = "/" + datax.owner + "/" + datax.action;
+            if ($(this).attr("dataBefore") != null) {                
+                var a = $(this).attr("dataBefore");
+                $.ajax({
+                    url: uri,
+                    type: 'post',
+                    data: datax
+                }).done(function (response) {
+                    window[a](response)
+                });
+            }
+            else {                
+                $.ajax({
+                    url: uri,
+                    type: 'post',
+                    data: datax
+                }).done(function (response) {
+                    console.log(response);                    
+                });
+            }
+        }
+    })
+</script>

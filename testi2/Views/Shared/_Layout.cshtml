@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - SIUG sistema inventario unificado general</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+</head>
+<body>
+    <div class="container">
+        <div class="well text-center">
+            <h1>
+                SIUG
+                <br />
+                Sistema de inventario unificado general
+            </h1>
+            <!--proceso lento-->
+        </div>
+        <div class="navbar navbar-inverse ">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("SIUG", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Clientes<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Crear", "create", "clients")</li>
+                                <li>@Html.ActionLink("Reporte", "index", "clients")</li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Productos<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Crear", "create", "stock")</li>
+                                <li>@Html.ActionLink("Reporte", "index", "stock")</li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Venta<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Crear", "index", "sale")</li>
+                                <li>@Html.ActionLink("Reporte", "report", "sale")</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
+            </div>
+        </div>
+        <div class="container body-content">
+            @RenderBody()
+        </div>
+        <hr />
+        <footer class="well">
+            <p>&copy; @DateTime.Now.Year - Sistema de inventario unificado general</p>
+        </footer>
+    </div>
+
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,79 @@
+﻿@model IEnumerable<testi2.Context.tb_stock>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Productos disponibles</h2>
+
+<p>
+    
+    @(Html.ActionLink("Crear nuevo", "create", new { id = "" }, new { @class = "btn btn-info" }))
+</p>
+<div class="table-responsive">
+    <table class="table table-hover">
+        <tr>
+            <th>
+                @Html.Label("description","Descripción")
+            </th>
+            <th>
+                @Html.Label("description", "Cantidad disponible")
+            </th>
+            <th>
+                @Html.Label("description", "Precio de compra")
+            </th>
+            <th>
+                @Html.Label("description", "Precio de venta")
+            </th>
+            <th>
+                @Html.Label("description", "Imagen")
+            </th>
+            <th>
+                @Html.Label("description", "Categoría")
+            </th>
+            <th>
+                @Html.Label("description", "Proveedor")
+            </th>
+            <th>
+                @Html.Label("description", "Estado")
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.sto_descript)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.sto_avaible)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.sto_buyPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.sto_salePrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.sto_url)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tb_category.cat_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tb_provider.pro_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tb_state.sta_name)
+                </td>
+                <td>
+                    @Html.ActionLink("Editar", "Edit", new { id = item.sto_id }) |
+                    @Html.ActionLink("Detalles", "Details", new { id = item.sto_id }) |
+                    @Html.ActionLink("Eliminar", "Delete", new { id = item.sto_id })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

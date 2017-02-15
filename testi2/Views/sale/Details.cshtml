@@ -1,0 +1,50 @@
+﻿@model testi2.Context.tb_sale_detail
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tb_sale_detail</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.sade_quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sade_quantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.sade_subtotal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sade_subtotal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tb_sale.sal_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tb_sale.sal_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tb_stock.sto_descript)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tb_stock.sto_descript)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.sade_id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,88 @@
+﻿@model testi2.Context.tb_users
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>tb_users</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.us_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.us_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.us_lastname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.us_lastname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.us_phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.us_phone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.us_email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.us_email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.us_pass)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.us_pass)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.us_cityId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.us_cityId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.us_createDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.us_createDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tb_state.sta_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tb_state.sta_name)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

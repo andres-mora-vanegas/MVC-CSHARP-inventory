@@ -1,0 +1,90 @@
+﻿@model testi2.Context.tb_clients
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tb_clients</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.cli_nit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cli_nit)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cli_name_company)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cli_name_company)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cli_name_contact)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cli_name_contact)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cli_last_name_contact)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cli_last_name_contact)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cli_phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cli_phone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cli_cel_phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cli_cel_phone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cli_email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cli_email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cli_date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cli_date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tb_state.sta_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tb_state.sta_name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.cli_id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
