@@ -5,28 +5,10 @@
 }
 
 <h2>Index</h2>
-<style>
-    td {
-        margin: 3px;
-        padding: 10px;
-    }
-
-    #info {
-        background: #F5F5F5;
-        padding: 15px;
-        width: 70%;
-    }
-
-    .preimg {
-        width: 25px;
-        height: 25px;
-        cursor: pointer;
-    }
-</style>
 
 <div id="contenidoVenta" align="center">
     <h1>Nueva venta</h1>
-    <form method="post" action="sale/sale" id="bill" name="bill" >
+    <form method="post" action="sale/sale" id="bill" name="bill">
         <input type="hidden" name="totalBill" />
         <div id="userList" align="center" class="usuarios">
             <label>Seleccione los productos y la cantidad</label>
@@ -92,14 +74,12 @@
                         </thead>
                         <tbody></tbody>
                     </table>
-                    <table>                       
+                    <table>
                         <tr>
                             <td style="border:none">
                                 Total
                             </td>
-                            <td style="border:none" id="totalSale">
-                                
-                            </td>                            
+                            <td style="border:none" id="totalSale"></td>
                     </table>
                 </div>
             </div>
@@ -108,164 +88,6 @@
 </div>
 <br />
 <center>
-    <span class="btn btn-success btn-lg billFinal ajaxProcessSingleC" id='' dataAction="sale" dataOwner="sale" data-toggle="modal" data-target="#myModal" title="Confirmar venta" id="doIt">Facturar</span>
-    <hr />
-    <span class="viewArray btn btn-info">Ver array</span>
+    <span class="btn btn-success btn-lg billFinal ajaxProcessSingleC" id='' dataAction="sale" dataOwner="sale" data-toggle="modal" data-target="#myModal" title="Confirmar venta" id="doIt">Facturar</span>    
 </center>
 <br />
-<script>
-    var inventory = "@ViewBag.Message";
-    var totalBuy = [];
-    var auto = 0;
-
-    function quantityOption(x) {
-        var json = JSON.parse(x);
-        var quantity = $("#DropDownListQuantity");
-        if (json.state == "ok") {
-            quantity.empty(); // remove any existing options
-            for (var i = 1; i <= parseInt(json.answer) ; i++) {
-                quantity.append($('<option>', {
-                    value: i,
-                    text: i
-                }));
-            }
-        }
-    }
-
-    $(".stockId").on("change", function () {
-        var id = $(this).val();
-        var price = $(".stockPrice option[value='" + id + "']").text()
-        $("#unitary").val(price);
-    })
-
-    $("#DropDownListQuantity").on("change", function () {
-        var howMany = $(this).val();
-        var price = ($("#unitary").val() * howMany);
-        $("#subtotal").val(price);
-    });
-
-    $(".addCar").on("click", function () {
-        var productId = $(".stockId").val();
-        var productDescription = $(".stockId option:selected").text();
-        var productQuantity = $("#DropDownListQuantity").val();
-        var productUnitary = $("#unitary").val();
-        var productSubtotal = $("#subtotal").val();
-        var removeRow = "<img src='/assets/images/cancell.png' class='preimg removeRow' />"
-
-        if (productUnitary != '' && productSubtotal != '') {
-            var fullTextBoxes = $('input:text').filter(function () { return this.value != ""; });
-            fullTextBoxes.each(function () {
-                $(this).css({
-                    "background": "initial",
-                    "color": "initial",
-                });
-            });
-            totalBuy.push([productId, productDescription, productQuantity]);
-            $("#billif").find('tbody').append($('<tr><td class="">' + auto + '</td><td class="">' + productId + '</td><td>' + productDescription + '</td><td>' + productQuantity + '</td><td>' + productUnitary + '</td><td>' + productSubtotal + '</td><td>' + removeRow + '</td></tr>'));
-            auto++;
-            $("#unitary,#subtotal").val("");
-            $(".stockId option[value='" + productId + "']").prop('disabled', true);
-            $("#totalSale").html();
-        }
-        else {
-            var emptyTextBoxes = $('input:text').filter(function () { return this.value == ""; });
-            emptyTextBoxes.each(function () {
-                $(this).css({
-                    "background": "red",
-                    "color": "white",
-                });
-            });
-        }
-
-    });
-
-    function arrSum() {
-        for (var x = 0; x < totalBuy.length; x++) {
-            for (var i = 0; i < totalBuy[x].length; i++) {
-                console.log(totalBuy[x][i]);
-            }
-        }
-    }
-
-    $(document).on("click", ".removeRow", function () {
-        //elegimos la posición del array a eliminar
-        var idRemove = $(this).parent().parent().children("td:eq(0)").html();
-        //eliminamos la posición
-        totalBuy.splice(idRemove, 1);
-        //quitamos la fila de la tabla detalle        
-        $(this).parent().parent().fadeOut();
-        //obtenemos el id del producto a habilitar en el desplegable 
-        idRemove = $(this).parent().parent().children("td:eq(1)").html();
-        //habilitamos la opción del desplegable
-        $(".stockId option[value='" + idRemove + "']").removeProp('disabled');
-    });
-
-    $(document).on("click", ".billFinal", function () {
-        var json = JSON.stringify(totalBuy);
-        $(this).attr("id",json);        
-    })
-
-    $(document).on("click", ".viewArray", function () {
-        console.log(totalBuy);
-        arrSum();
-    });
-
-    $(".ajaxProcessSingle").change(function () {
-        var datax = {};
-        datax.id = $(this).val();
-        datax.action = $(this).attr("dataAction");
-        datax.owner = $(this).attr("dataOwner");
-        if (datax.id != "") {
-            var uri = "/" + datax.owner + "/" + datax.action;
-            if ($(this).attr("dataBefore") != null) {
-                var a = $(this).attr("dataBefore");
-                $.ajax({
-                    url: uri,
-                    type: 'post',
-                    data: datax
-                }).done(function (response) {
-                    window[a](response)
-                });
-            }
-            else {
-                $.ajax({
-                    url: uri,
-                    type: 'post',
-                    data: datax
-                }).done(function (response) {
-                    console.log(response);
-                    //$("#quantityInfo").html(response);
-                });
-            }
-        }
-    })
-
-    $(document).on("click", ".ajaxProcessSingleC", function () {
-        var datax = {};        
-        datax.id = $(this).attr("id");
-        datax.action = $(this).attr("dataAction");
-        datax.owner = $(this).attr("dataOwner");
-        if (datax.id != "") {                        
-            var uri = "/" + datax.owner + "/" + datax.action;
-            if ($(this).attr("dataBefore") != null) {                
-                var a = $(this).attr("dataBefore");
-                $.ajax({
-                    url: uri,
-                    type: 'post',
-                    data: datax
-                }).done(function (response) {
-                    window[a](response)
-                });
-            }
-            else {                
-                $.ajax({
-                    url: uri,
-                    type: 'post',
-                    data: datax
-                }).done(function (response) {
-                    console.log(response);                    
-                });
-            }
-        }
-    })
-</script>

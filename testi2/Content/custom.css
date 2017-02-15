@@ -1,0 +1,26 @@
+﻿td {
+    margin: 3px;
+    padding: 10px;
+}
+
+#info {
+    background: #F5F5F5;
+    padding: 15px;
+    width: 70%;
+}
+
+.preimg {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}
+
+.bg-danger {
+    background: #F2DEDE !important;
+    color: darkred !important;
+}
+
+.bg-success {
+    background: #D9EDF7 !important;
+    color: initial !important;
+}

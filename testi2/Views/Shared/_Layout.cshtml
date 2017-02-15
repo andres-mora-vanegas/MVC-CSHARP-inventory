@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - SIUG sistema inventario unificado general</title>
+    <link href="@Url.Content("~/Content/custom.css")" rel="stylesheet" type="text/css" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
@@ -66,8 +67,9 @@
             <p>&copy; @DateTime.Now.Year - Sistema de inventario unificado general</p>
         </footer>
     </div>
-
-
+    <script type="text/javascript" src="@Url.Content("/Scripts/ajax.js")"></script>
+    <script type="text/javascript" src="@Url.Content("/Scripts/efects.js")"></script>
+    @RenderSection("JavaScript", required: false)
     @RenderSection("scripts", required: false)
 </body>
 </html>
