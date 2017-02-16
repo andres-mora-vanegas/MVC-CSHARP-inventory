@@ -1,11 +1,14 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Reflection;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
@@ -72,19 +75,63 @@ namespace testi2.Controllers
         {
 
             var bandera = "";
+            //var actualDate = "2017-02-15";
+            //DateTime actualDate = DateTime.ParseExact("2017-02-15 14:40:52,531", "yyyy-MM-dd HH:mm:ss,fff",
+            //                           System.Globalization.CultureInfo.InvariantCulture);
+            DateTime actualDate = DateTime.Now;
+            String[] cultureNames = { "es-CO" };
+
             var obj = new JObject();
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             JsonCLass Data = serializer.Deserialize<JsonCLass>(id);
 
-            string salePerson = Data.salePerson;
-            string clientPerson = Data.clientPerson;
+            int salePerson = Int32.Parse(Data.salePerson);
+            int clientPerson = Int32.Parse(Data.clientPerson);
             //string Jsonx = Data.items.ToString();
 
             //validamos que los datos sean distintos a vacio
-            if (salePerson != "" && salePerson != "")
+            if (salePerson != 0 && salePerson != 0)
             {
+                //insertamos la venta
+                var sql = new tb_sale
+                {
+                    sal_userId = salePerson,
+                    sal_cli_id = clientPerson,
+                    sal_date = actualDate,
+                    sal_state = 1
+                };
+                db.tb_sale.Add(sql);
+                db.SaveChanges();
+                db.Entry(sql).GetDatabaseValues();
+                //obtenemos id de la venta insertada
+                var idx = sql.sal_id;
+
+                //JavaScriptSerializer serializer = new JavaScriptSerializer();
+                //JsonCLass Data = serializer.Deserialize<JsonCLass>(id);
+
+                //recorremos todos los items adquiridos
+                //foreach (detail objitem in Data.items)
+                //{
+                //    //obtenemos los datos a insertar en la tabla
+                //    long productId = long.Parse(objitem.productId);//Get all item of jsonID .
+                //    string productDescription = objitem.productDescription;//Get all item of jsonID .
+                //    long productQuantity = long.Parse(objitem.productQuantity);//Get all item of jsonID .
+                //    long productSubtotal = long.Parse(objitem.productSubtotal);//Get all item of jsonID .
+
+                //    var sql2 = new tb_sale_detail
+                //    {
+                //        sade_sale_id = idx,
+                //        sade_stock_id = productId,
+                //        sade_quantity = productQuantity,
+                //        sade_subtotal = productSubtotal
+                //    };
+                //    //guardamos los articulos comprados
+                //    db.tb_sale_detail.Add(sql2);
+                //    db.SaveChanges();
+                //}
+
                 obj["state"] = "ok";
-                obj["answer"] = id;
+                obj["answer"] = var_dump(Data.items, 0);
             }
             else
             {
@@ -92,155 +139,6 @@ namespace testi2.Controllers
                 obj["answer"] = id;
             }
 
-            //foreach (detail objitem in Data.items)
-            //{
-            //    string a = objitem.productId;//Get all item of jsonID .
-            //    string b = objitem.productDescription;//Get all item of jsonID .
-            //    string c = objitem.productQuantity;//Get all item of jsonID .
-            //}
-            //if (
-            ////valida que tengamos todos los datos necesarios para generar la factura, el nombre del usuario, el id del vendedor, los productos escogidos.
-            //        isset($_POST['cliId']) && !empty($_POST['cliId']) &&
-            //        isset($_POST['idUser']) && !empty($_POST['idUser']) &&
-            //        isset($_POST['json']) && !empty($_POST['json'])
-            //)
-            //{
-            //    var fecha = date("y-m-d");
-            //    var cliId = $_POST['cliId'];
-            //    var jsonArray = json_decode($_POST['json']);
-            //    var idUser = $_POST['idUser'];
-
-            //    //inserta la venta con el nombre del usuario, id del vendedor
-            //    $saleInsert = $sale->create(
-            //            $sale->clientId = $cliId, $sale->saleUserId = $idUser
-            //    );               
-
-            //    $querySale = $dbConection->ejecutar($saleInsert);
-            //    if ($querySale) {
-            //        //echo "<script>alert('".$jsonArray."');</script>";
-            //        //valida si se inserto la venta
-            //        $var = "1";
-            //        $idInsertSale = $dbConection->lastID();
-            //        //obtiene el id de esa venta generada
-            //        $saleDetailx = array();
-            //        $canti = count($jsonArray->arrayProduct);
-            //        //obtiene la cantidad de productos comprados
-            //        //echo "<script>alert('holaaa".$_POST['json']."');</script>";
-            //        $totalSale = '';
-            //        //foreach($jsonArray as $obj):
-            //        for ($x = 0; $x < $canti; $x++) {
-
-            //            //valida la cantidad de productos adquiridos
-            //            $productx = $jsonArray->arrayProduct[$x]->product;
-            //            $quantity = $jsonArray->arrayProduct[$x]->quantity;
-            //            $subtotal = $jsonArray->arrayProduct[$x]->subtotal;
-            //            $saleDetailn = $saleDetail->create($saleDetail->saleId = $idInsertSale, $saleDetail->stockId = $productx, $saleDetail->quantity = $quantity, $saleDetail->subtotal = $subtotal
-            //            );
-            //            //inserta un registro por cada producto en la tabla detalle venta							
-            //            $querySaleDetail = $dbConection->ejecutar($saleDetailn);
-            //            $stockRemaining = $product->showOne($product->id = $productx);
-            //            $queryStockRemaining = $dbConection->mostrar_fila($stockRemaining);
-            //            $bandera71 = '';
-            //            if ($queryStockRemaining) {
-            //                if ($queryStockRemaining > 0) {
-            //                    foreach ($queryStockRemaining as $rowRemaining):
-            //                        $bandera71 = $rowRemaining['sto_avaible'];
-            //                    endforeach;
-            //                }
-            //                else {
-            //                    echo "No se encontraron productos";
-            //                }
-            //            }
-            //            //se resta el producto del inventario
-            //            $bandera71 = $bandera71 - $quantity;
-            //            $stockRemaining = $product->updateQuantity($product->id = $productx, $product->avaible = $bandera71);
-            //            $queryStockRemaining = $dbConection->ejecutar($stockRemaining);
-            //            //si se encontró un error disminuir los productos del inventari
-            //            if (!$queryStockRemaining) {
-            //                echo "<script>alert('error al restar el producto del inventario');</script>";
-            //            } else {
-            //                if ($bandera71 < 3) {
-            //                    //si hay menos de 3 productos se comienza a crear el email
-            //                    @$obj->body0.= "<tr><td>Se agotando el producto </td><td> {$rowRemaining['sto_descript']} </td></tr><tr> <td>Solo quedan </td><td>{$bandera71}</td></tr>";
-            //                    $obj->emailProcess = true;
-            //                }
-            //                $totalSale = $totalSale + $saleDetail->subtotal = $subtotal;
-            //                //obtiene el valor total de la factura
-            //            }
-            //        }
-            //        //se valida que haya información para el email
-            //        if (isset($obj->emailProcess) and $obj->emailProcess == true) {
-            //            $obj->name = "Juan Andres Diaz";
-            //            $obj->email = "andymora1907@hotmail.com";
-            //            $obj->subject = "Se está quedando sin inventario ";
-            //            $obj->body = customMail($obj);
-            //            $obj->emailSend = sendEmail($obj);
-            //        }
-            //        //inserta los datos de la factura es decir el valor total de la venta y el id de la venta
-            //        $billx = $bill->create($bill->state = 1, $bill->total = $totalSale, $bill->saleId = $idInsertSale
-            //        );
-            //        $queryBill = $dbConection->ejecutar($billx);
-            //        //ejecuta la insercion de la factura
-            //        //print_r($saleDetailx);
-            //        if (@$queryBill) {
-            //            $idInsertBill = $dbConection->lastID();
-            //            //si inserta de forma correcta recupera el id de la insercion
-            //            $sqlBill = $bill->showOneBillSale($bill->id = $idInsertBill);
-            //            //obtiene el detalle de todos los articulos comprados por el id de la factura
-            //            $queryBill2 = $dbConection->mostrar_fila($sqlBill);
-            //            //echo $sqlBill;
-            //            foreach ($queryBill2 as $row) {
-            //                //obtiene toda la informacion de la venta a trav�s del id de la factura
-            //                $bandera = $row['bil_sal_id'];
-            //                $b = $bandera;
-            //                $a = $row['bil_date'];
-            //                $h = $row['bil_total'];
-            //                $i = $row['us_name']. " ". $row['us_lastname'];
-            //                $j = $row['sal_customer'];
-            //            }
-            //            @$sqlSaleByBill = $bill->showOneSaleStock($bill->id = $bandera);
-            //            //obtiene el detalle del producto comprado como nombre, descripcion, id, etc...
-            //            @$querySaleDetail2 = $dbConection->mostrar_fila($sqlSaleByBill);
-            //            $bandera = 1;
-            //            $var = "Factura creada correctamente <br />";
-            //        } else {
-            //            $bandera = 2;
-            //            $var = "Se produjo un error inesperado en la generacion de la factura";
-            //        }
-            //    } else {
-            //        $bandera = 2;
-            //        $var = "Se produjo un error inesperado al realizar la venta<br />";
-            //    }
-            //    $vartotal = $var;
-            //    if ($bandera == 1) {
-            //        $echox = $message->bill1($message->a = $a, $message->b = $b, $message->c = $idInsertBill, $message->j = $j);
-            //        //comienza a crear el encabezado de la factura
-            //        echo $echox;
-            //        //echo $sqlSaleByBill;
-            //        if ($querySaleDetail2) {
-            //            foreach ($querySaleDetail2 as $rowxyz) {
-            //                //comienza a imprimir el detalle de la factura
-            //                echo "<tr><td style='text-align:left'>". $rowxyz['sto_id']. "</td><td style='text-align:center' >". $rowxyz['sto_descript']. "</td><td style='text-align:center'>". $rowxyz['sade_quantity']. "</td><td style='text-align:center'>$".number_format($rowxyz['sto_salePrice']). "</td><td style='text-align:right'>$".number_format($rowxyz['sade_subtotal']). "</td></tr>";
-            //            }
-            //        } else {
-            //            echo "Se encontro el siguiente error: ". $sqlSaleByBill;
-            //        }
-            //        $echox2 = $message->bill2($message->h = number_format($h), $message->i = $i);
-            //        //crea el pie de pagina de la factura
-            //        echo $echox2;
-            //    } else {
-            //        $echox = $message->mensa($message->mens = $vartotal);
-            //    }
-            //}
-            ////faltan datos por registrar
-            //else
-            //{
-            //    $vartotal = "Faltan datos por registrar";
-            //}
-            //if ($bandera != 1) {
-            //    //echo $message->mensa($message->mens = $vartotal);
-            //    echo $vartotal;
-            //}
             var temp = JsonConvert.SerializeObject(obj);
             return Json(temp, JsonRequestBehavior.AllowGet);
         }
@@ -257,6 +155,97 @@ namespace testi2.Controllers
             public string productId { get; set; }
             public string productDescription { get; set; }
             public string productQuantity { get; set; }
+            public string productSubtotal { get; set; }
+        }
+
+        public string var_dump(object obj, int recursion)
+        {
+            StringBuilder result = new StringBuilder();
+
+            // Protect the method against endless recursion
+            if (recursion < 5)
+            {
+                // Determine object type
+                Type t = obj.GetType();
+
+                // Get array with properties for this object
+                PropertyInfo[] properties = t.GetProperties();
+
+                foreach (PropertyInfo property in properties)
+                {
+                    try
+                    {
+                        // Get the property value
+                        object value = property.GetValue(obj, null);
+
+                        // Create indenting string to put in front of properties of a deeper level
+                        // We'll need this when we display the property name and value
+                        string indent = String.Empty;
+                        string spaces = "|   ";
+                        string trail = "|...";
+
+                        if (recursion > 0)
+                        {
+                            indent = new StringBuilder(trail).Insert(0, spaces, recursion - 1).ToString();
+                        }
+
+                        if (value != null)
+                        {
+                            // If the value is a string, add quotation marks
+                            string displayValue = value.ToString();
+                            if (value is string) displayValue = String.Concat('"', displayValue, '"');
+
+                            // Add property name and value to return string
+                            result.AppendFormat("{0}{1} = {2}\n", indent, property.Name, displayValue);
+
+                            try
+                            {
+                                if (!(value is ICollection))
+                                {
+                                    // Call var_dump() again to list child properties
+                                    // This throws an exception if the current property value
+                                    // is of an unsupported type (eg. it has not properties)
+                                    result.Append(var_dump(value, recursion + 1));
+                                }
+                                else
+                                {
+                                    // 2009-07-29: added support for collections
+                                    // The value is a collection (eg. it's an arraylist or generic list)
+                                    // so loop through its elements and dump their properties
+                                    int elementCount = 0;
+                                    foreach (object element in ((ICollection)value))
+                                    {
+                                        string elementName = String.Format("{0}[{1}]", property.Name, elementCount);
+                                        indent = new StringBuilder(trail).Insert(0, spaces, recursion).ToString();
+
+                                        // Display the collection element name and type
+                                        result.AppendFormat("{0}{1} = {2}\n", indent, elementName, element.ToString());
+
+                                        // Display the child properties
+                                        result.Append(var_dump(element, recursion + 2));
+                                        elementCount++;
+                                    }
+
+                                    result.Append(var_dump(value, recursion + 1));
+                                }
+                            }
+                            catch { }
+                        }
+                        else
+                        {
+                            // Add empty (null) property to return string
+                            result.AppendFormat("{0}{1} = {2}\n", indent, property.Name, "null");
+                        }
+                    }
+                    catch
+                    {
+                        // Some properties will throw an exception on property.GetValue()
+                        // I don't know exactly why this happens, so for now i will ignore them...
+                    }
+                }
+            }
+
+            return result.ToString();
         }
 
         // GET: sale/Details/5

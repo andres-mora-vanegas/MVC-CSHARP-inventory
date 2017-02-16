@@ -34,5 +34,7 @@ namespace testi2.Context
         public virtual ICollection<tb_sale_detail> tb_sale_detail { get; set; }
         public virtual tb_users tb_users { get; set; }
         public virtual tb_state tb_state { get; set; }
+        public object Id { get; internal set; }
+        public object ID { get; internal set; }
     }
 }

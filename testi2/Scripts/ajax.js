@@ -21,7 +21,8 @@
                 type: 'post',
                 data: datax
             }).done(function (response) {
-                console.log(response);
+                //console.log(response);
+                bootbox.alert(response);
                 //$("#quantityInfo").html(response);
             });
         }
@@ -54,7 +55,8 @@ $(document).on("click", ".ajaxProcessSingleC", function () {
                 type: 'post',
                 data: datax
             }).done(function (response) {
-                console.log(response);
+                //console.log(response);
+                bootbox.alert(response);
             });
         }
     }

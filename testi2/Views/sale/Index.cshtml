@@ -1,25 +1,18 @@
 ﻿@model IEnumerable<testi2.Context.tb_sale_detail>
-
 @{
     ViewBag.Title = "Index";
 }
-
-<h2>Index</h2>
-
 <div id="contenidoVenta" align="center">
     <h1>Nueva venta</h1>
     <form method="post" action="sale/sale" id="bill" name="bill">
         <input type="hidden" name="totalBill" />
         <div id="userList" align="center" class="usuarios">
             <label>Seleccione los productos y la cantidad</label>
-            <div class="container" id="info">
-                <input type="hidden" name="idUser" value="@ViewBag.idUser" id="idUser" />
-                <input type="hidden" name="json" id="json" />
-                <input type="hidden" name="send" value="Facturar" />
+            <div class="container" id="info">                
                 <br />
                 <div class="row">
-                    <div class="col-xs-6">Selecciona el cliente</div>
-                    <div class="col-xs-6">@Html.DropDownList("cliId", ViewBag.clientId as SelectList, "Seleccione un cliente", htmlAttributes: new { @class = "form-control " })</div>
+                    <div class="col-xs-12">Selecciona el cliente</div>
+                    <div class="col-xs-12">@Html.DropDownList("cliId", ViewBag.clientId as SelectList, "Seleccione un cliente", htmlAttributes: new { @class = "form-control " })</div>
                     <label id="error"></label>
                 </div>
                 <div class="row">

@@ -2,7 +2,7 @@
 var totalBuy = [];
 var dataOfSale = {};
 var auto = 0;
-var noData = "<div class='alert alert-danger'>Faltan datos por registrar</div>";
+var noData = "<div class='alert alert-danger'><h3 style='text-align:center'>Faltan datos por registrar</h3></div>";
 
 $.getScript("/Scripts/bootbox.min.js");
 
@@ -64,6 +64,7 @@ $(".addCar").on("click", function () {
         detail.productId = productId;
         detail.productDescription = productDescription;
         detail.productQuantity = productQuantity;
+        detail.productSubtotal = productSubtotal;
         //agregamos los datos del producto al array maestro
         totalBuy.push(
             detail
@@ -115,9 +116,9 @@ $(document).on("click", ".billFinal", function () {
     if ($.trim($("[name=cliId]").val()) != '') {
         $("[name=cliId]").removeClass("bg-danger");
         //obtenemos los datos del vendedor
-        dataOfSale.salePerson = "mario";
+        dataOfSale.salePerson = 1010;
         //obtenemos los datos del cliente
-        dataOfSale.clientPerson = 990;
+        dataOfSale.clientPerson = $("[name=cliId]").val();
         //obtenemos el detalle de la venta escogida
         dataOfSale.detail = JSON.stringify(totalBuy);
         //convertimos en json
