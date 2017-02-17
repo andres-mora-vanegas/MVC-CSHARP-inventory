@@ -9,6 +9,10 @@
     width: 70%;
 }
 
+.margin {
+    margin:5px;
+}
+
 .preimg {
     width: 25px;
     height: 25px;
@@ -26,5 +30,12 @@
 }
 
 .bootbox-body {
-    margin-top:30px;
+    margin-top: 30px;
+}
+
+@media (max-width: 572px) {
+    #info {
+        padding: 15px;
+        width: 100%;
+    }
 }

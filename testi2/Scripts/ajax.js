@@ -33,10 +33,12 @@
 })
 
 $(document).on("click", ".ajaxProcessSingleC", function () {
+    addToJson();
     var datax = {};
-    datax.id = $(this).attr("id");
+    datax.id = json;
     datax.action = $(this).attr("dataAction");
     datax.owner = $(this).attr("dataOwner");
+    console.log(datax.id);
     if (datax.id != "") {
         var uri = "/" + datax.owner + "/" + datax.action;
         if ($(this).attr("dataBefore") != null) {
@@ -55,9 +57,10 @@ $(document).on("click", ".ajaxProcessSingleC", function () {
                 type: 'post',
                 data: datax
             }).done(function (response) {
-                //console.log(response);
                 bootbox.alert(response);
-            });
+            }).fail(function () {
+                bootbox.alert(error);
+            })
         }
     }
     else {

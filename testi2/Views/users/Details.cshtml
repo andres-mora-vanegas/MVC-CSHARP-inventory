@@ -1,4 +1,4 @@
-﻿@model testi2.Context.tb_users
+﻿@model testi2.Context.users
 
 @{
     ViewBag.Title = "Details";
@@ -7,63 +7,63 @@
 <h2>Details</h2>
 
 <div>
-    <h4>tb_users</h4>
+    <h4>users</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.us_name)
+            @Html.DisplayNameFor(model => model.userName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.us_name)
+            @Html.DisplayFor(model => model.userName)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.us_lastname)
+            @Html.DisplayNameFor(model => model.userLastNamel)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.us_lastname)
+            @Html.DisplayFor(model => model.userLastNamel)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.us_phone)
+            @Html.DisplayNameFor(model => model.userPhone)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.us_phone)
+            @Html.DisplayFor(model => model.userPhone)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.us_email)
+            @Html.DisplayNameFor(model => model.userEmail)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.us_email)
+            @Html.DisplayFor(model => model.userEmail)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.us_pass)
+            @Html.DisplayNameFor(model => model.userPass)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.us_pass)
+            @Html.DisplayFor(model => model.userPass)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.us_cityId)
+            @Html.DisplayNameFor(model => model.userCityId)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.us_cityId)
+            @Html.DisplayFor(model => model.userCityId)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.us_createDate)
+            @Html.DisplayNameFor(model => model.userCreateDate)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.us_createDate)
+            @Html.DisplayFor(model => model.userCreateDate)
         </dd>
 
         <dt>
@@ -77,6 +77,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.us_id }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.userId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

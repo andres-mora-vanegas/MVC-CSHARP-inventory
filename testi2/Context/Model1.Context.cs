@@ -37,6 +37,6 @@ namespace testi2.Context
         public virtual DbSet<tb_sale_detail> tb_sale_detail { get; set; }
         public virtual DbSet<tb_state> tb_state { get; set; }
         public virtual DbSet<tb_stock> tb_stock { get; set; }
-        public virtual DbSet<tb_users> tb_users { get; set; }
+        public virtual DbSet<users> tb_users { get; set; }
     }
 }

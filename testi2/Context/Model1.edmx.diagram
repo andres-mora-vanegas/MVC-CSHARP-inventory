@@ -17,7 +17,7 @@
         <EntityTypeShape EntityType="bd_siugModel.tb_sale_detail" Width="1.5" PointX="10.5" PointY="15" IsExpanded="true" />
         <EntityTypeShape EntityType="bd_siugModel.tb_state" Width="1.5" PointX="0.75" PointY="12.5" IsExpanded="true" />
         <EntityTypeShape EntityType="bd_siugModel.tb_stock" Width="1.5" PointX="8.25" PointY="12" IsExpanded="true" />
-        <EntityTypeShape EntityType="bd_siugModel.tb_users" Width="1.5" PointX="3" PointY="23.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="bd_siugModel.users" Width="1.5" PointX="3" PointY="23.5" IsExpanded="true" />
         <AssociationConnector Association="bd_siugModel.tb_access_ibfk_1" ManuallyRouted="false" />
         <AssociationConnector Association="bd_siugModel.tb_bill_ibfk_1" ManuallyRouted="false" />
         <AssociationConnector Association="bd_siugModel.tb_bill_ibfk_2" ManuallyRouted="false" />

@@ -17,7 +17,7 @@ namespace testi2.Controllers
         // GET: users
         public ActionResult Index()
         {
-            var tb_users = db.tb_users.Include(t => t.tb_state);
+            var tb_users = db.tb_users.Include(u => u.tb_state);
             return View(tb_users.ToList());
         }
 
@@ -28,18 +28,18 @@ namespace testi2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            tb_users tb_users = db.tb_users.Find(id);
-            if (tb_users == null)
+            users users = db.tb_users.Find(id);
+            if (users == null)
             {
                 return HttpNotFound();
             }
-            return View(tb_users);
+            return View(users);
         }
 
         // GET: users/Create
         public ActionResult Create()
         {
-            ViewBag.us_state = new SelectList(db.tb_state, "sta_id", "sta_name");
+            ViewBag.userState = new SelectList(db.tb_state, "sta_id", "sta_name");
             return View();
         }
 
@@ -48,17 +48,17 @@ namespace testi2.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "us_id,us_name,us_lastname,us_phone,us_email,us_pass,us_cityId,us_createDate,us_state")] tb_users tb_users)
+        public ActionResult Create([Bind(Include = "userId,userName,userLastNamel,userPhone,userEmail,userPass,userCityId,userCreateDate,userState")] users users)
         {
             if (ModelState.IsValid)
             {
-                db.tb_users.Add(tb_users);
+                db.tb_users.Add(users);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.us_state = new SelectList(db.tb_state, "sta_id", "sta_name", tb_users.us_state);
-            return View(tb_users);
+            ViewBag.userState = new SelectList(db.tb_state, "sta_id", "sta_name", users.userState);
+            return View(users);
         }
 
         // GET: users/Edit/5
@@ -68,13 +68,13 @@ namespace testi2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            tb_users tb_users = db.tb_users.Find(id);
-            if (tb_users == null)
+            users users = db.tb_users.Find(id);
+            if (users == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.us_state = new SelectList(db.tb_state, "sta_id", "sta_name", tb_users.us_state);
-            return View(tb_users);
+            ViewBag.userState = new SelectList(db.tb_state, "sta_id", "sta_name", users.userState);
+            return View(users);
         }
 
         // POST: users/Edit/5
@@ -82,16 +82,16 @@ namespace testi2.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "us_id,us_name,us_lastname,us_phone,us_email,us_pass,us_cityId,us_createDate,us_state")] tb_users tb_users)
+        public ActionResult Edit([Bind(Include = "userId,userName,userLastNamel,userPhone,userEmail,userPass,userCityId,userCreateDate,userState")] users users)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(tb_users).State = EntityState.Modified;
+                db.Entry(users).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.us_state = new SelectList(db.tb_state, "sta_id", "sta_name", tb_users.us_state);
-            return View(tb_users);
+            ViewBag.userState = new SelectList(db.tb_state, "sta_id", "sta_name", users.userState);
+            return View(users);
         }
 
         // GET: users/Delete/5
@@ -101,12 +101,12 @@ namespace testi2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            tb_users tb_users = db.tb_users.Find(id);
-            if (tb_users == null)
+            users users = db.tb_users.Find(id);
+            if (users == null)
             {
                 return HttpNotFound();
             }
-            return View(tb_users);
+            return View(users);
         }
 
         // POST: users/Delete/5
@@ -114,8 +114,8 @@ namespace testi2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            tb_users tb_users = db.tb_users.Find(id);
-            db.tb_users.Remove(tb_users);
+            users users = db.tb_users.Find(id);
+            db.tb_users.Remove(users);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

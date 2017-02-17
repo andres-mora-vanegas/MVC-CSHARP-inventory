@@ -641,30 +641,30 @@
           <NavigationProperty Name="tb_sale_detail" Relationship="Self.tb_sale_detail_ibfk_2" FromRole="tb_stock" ToRole="tb_sale_detail" />
           <NavigationProperty Name="tb_state" Relationship="Self.tb_stock_ibfk_1" FromRole="tb_stock" ToRole="tb_state" />
         </EntityType>
-        <EntityType Name="tb_users">
+        <EntityType Name="users">
           <Key>
-            <PropertyRef Name="us_id" />
+            <PropertyRef Name="userId" />
           </Key>
-          <Property Name="us_id" Type="Int64" Nullable="false" />
-          <Property Name="us_name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="us_lastname" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="us_phone" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="us_email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="us_pass" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="us_cityId" Type="Int64" Nullable="false" />
-          <Property Name="us_createDate" Type="DateTime" Nullable="false" />
-          <Property Name="us_state" Type="Int64" Nullable="false" />
+          <Property Name="userId" Type="Int64" Nullable="false" />
+          <Property Name="userName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="userLastNamel" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="userPhone" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="userEmail" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="userPass" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="userCityId" Type="Int64" Nullable="false" />
+          <Property Name="userCreateDate" Type="DateTime" Nullable="false" />
+          <Property Name="userState" Type="Int64" Nullable="false" />
           <NavigationProperty Name="tb_access" Relationship="Self.tb_access_ibfk_1" FromRole="tb_users" ToRole="tb_access" />
           <NavigationProperty Name="tb_role_user" Relationship="Self.tb_role_user_ibfk_2" FromRole="tb_users" ToRole="tb_role_user" />
           <NavigationProperty Name="tb_sale" Relationship="Self.tb_sale_ibfk_1" FromRole="tb_users" ToRole="tb_sale" />
           <NavigationProperty Name="tb_state" Relationship="Self.tb_users_ibfk_1" FromRole="tb_users" ToRole="tb_state" />
         </EntityType>
         <Association Name="tb_access_ibfk_1">
-          <End Role="tb_users" Type="Self.tb_users" Multiplicity="1" />
+          <End Role="tb_users" Type="bd_siugModel.users" Multiplicity="1" />
           <End Role="tb_access" Type="Self.tb_access" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tb_users">
-              <PropertyRef Name="us_id" />
+              <PropertyRef Name="userId" />
             </Principal>
             <Dependent Role="tb_access">
               <PropertyRef Name="acc_us_id" />
@@ -804,11 +804,11 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="tb_role_user_ibfk_2">
-          <End Role="tb_users" Type="Self.tb_users" Multiplicity="1" />
+          <End Role="tb_users" Type="bd_siugModel.users" Multiplicity="1" />
           <End Role="tb_role_user" Type="Self.tb_role_user" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tb_users">
-              <PropertyRef Name="us_id" />
+              <PropertyRef Name="userId" />
             </Principal>
             <Dependent Role="tb_role_user">
               <PropertyRef Name="rolu_user_id" />
@@ -840,11 +840,11 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="tb_sale_ibfk_1">
-          <End Role="tb_users" Type="Self.tb_users" Multiplicity="1" />
+          <End Role="tb_users" Type="bd_siugModel.users" Multiplicity="1" />
           <End Role="tb_sale" Type="Self.tb_sale" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tb_users">
-              <PropertyRef Name="us_id" />
+              <PropertyRef Name="userId" />
             </Principal>
             <Dependent Role="tb_sale">
               <PropertyRef Name="sal_userId" />
@@ -889,13 +889,13 @@
         </Association>
         <Association Name="tb_users_ibfk_1">
           <End Role="tb_state" Type="Self.tb_state" Multiplicity="1" />
-          <End Role="tb_users" Type="Self.tb_users" Multiplicity="*" />
+          <End Role="tb_users" Type="bd_siugModel.users" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tb_state">
               <PropertyRef Name="sta_id" />
             </Principal>
             <Dependent Role="tb_users">
-              <PropertyRef Name="us_state" />
+              <PropertyRef Name="userState" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -912,7 +912,7 @@
           <EntitySet Name="tb_sale_detail" EntityType="Self.tb_sale_detail" />
           <EntitySet Name="tb_state" EntityType="Self.tb_state" />
           <EntitySet Name="tb_stock" EntityType="Self.tb_stock" />
-          <EntitySet Name="tb_users" EntityType="Self.tb_users" />
+          <EntitySet Name="tb_users" EntityType="bd_siugModel.users" />
           <AssociationSet Name="tb_access_ibfk_1" Association="Self.tb_access_ibfk_1">
             <End Role="tb_users" EntitySet="tb_users" />
             <End Role="tb_access" EntitySet="tb_access" />
@@ -1136,17 +1136,17 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tb_users">
-            <EntityTypeMapping TypeName="bd_siugModel.tb_users">
+            <EntityTypeMapping TypeName="bd_siugModel.users">
               <MappingFragment StoreEntitySet="tb_users">
-                <ScalarProperty Name="us_id" ColumnName="us_id" />
-                <ScalarProperty Name="us_name" ColumnName="us_name" />
-                <ScalarProperty Name="us_lastname" ColumnName="us_lastname" />
-                <ScalarProperty Name="us_phone" ColumnName="us_phone" />
-                <ScalarProperty Name="us_email" ColumnName="us_email" />
-                <ScalarProperty Name="us_pass" ColumnName="us_pass" />
-                <ScalarProperty Name="us_cityId" ColumnName="us_cityId" />
-                <ScalarProperty Name="us_createDate" ColumnName="us_createDate" />
-                <ScalarProperty Name="us_state" ColumnName="us_state" />
+                <ScalarProperty Name="userId" ColumnName="us_id" />
+                <ScalarProperty Name="userName" ColumnName="us_name" />
+                <ScalarProperty Name="userLastNamel" ColumnName="us_lastname" />
+                <ScalarProperty Name="userPhone" ColumnName="us_phone" />
+                <ScalarProperty Name="userEmail" ColumnName="us_email" />
+                <ScalarProperty Name="userPass" ColumnName="us_pass" />
+                <ScalarProperty Name="userCityId" ColumnName="us_cityId" />
+                <ScalarProperty Name="userCreateDate" ColumnName="us_createDate" />
+                <ScalarProperty Name="userState" ColumnName="us_state" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

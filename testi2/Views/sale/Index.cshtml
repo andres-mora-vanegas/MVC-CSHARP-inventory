@@ -8,7 +8,7 @@
         <input type="hidden" name="totalBill" />
         <div id="userList" align="center" class="usuarios">
             <label>Seleccione los productos y la cantidad</label>
-            <div class="container" id="info">                
+            <div class="container table-responsive" id="info">                
                 <br />
                 <div class="row">
                     <div class="col-xs-12">Selecciona el cliente</div>
@@ -33,10 +33,12 @@
                     </div>
 
                     <div class="col-xs-6">
-                        <img class="preimg addCar" alt="agregar" title="Agregar producto" src="~/assets/images/add.png" />
+                        <img class="preimg addCar hidden" alt="agregar" title="Agregar producto" src="~/assets/images/add.png" />
+                        <span class="btn btn-success glyphicon glyphicon-plus-sign addCar margin"></span>
                     </div>
                     <div class="col-xs-6">
-                        <img class="preimg" id="cancell" alt="cancelar" title="Cancelar transacción" src="~/assets/images/cancell.png" />
+                        <img class="preimg hidden" id="cancell" alt="cancelar" title="Cancelar transacción" src="~/assets/images/cancell.png" />
+                        <span class="btn btn-danger glyphicon glyphicon-remove-sign text-danger margin"></span>
                     </div>
                 </div>
                 <hr />
@@ -45,7 +47,7 @@
                     <table class="table-bordered" id="billif">
                         <thead>
                             <tr>
-                                <td>
+                                <td class="hidden">
                                     auto
                                 </td>
                                 <td>

@@ -1,8 +1,10 @@
 ﻿var inventory = "@ViewBag.Message";
 var totalBuy = [];
 var dataOfSale = {};
+var json = {};
 var auto = 0;
-var noData = "<div class='alert alert-danger'><h3 style='text-align:center'>Faltan datos por registrar</h3></div>";
+var noData = "<div class='alert alert-warning'><h4 style='text-align:center'>Faltan datos por registrar</h4></div>";
+var error = "<div class='alert alert-danger'><h4 style='text-align:center'>Ocurrió un error inesperado, consulta con el administrador</h4></div>";
 
 $.getScript("/Scripts/bootbox.min.js");
 
@@ -53,7 +55,7 @@ $(".addCar").on("click", function () {
     var productUnitary = $("#unitary").val();
     var productSubtotal = $("#subtotal").val();
     //se agrega la imagen para eliminar el producto de la lista
-    var removeRow = "<img src='/assets/images/cancell.png' class='preimg removeRow' />"
+    var removeRow = '<span class="btn btn-danger glyphicon glyphicon-trash text-danger margin removeRow"></span>';
     //si todos los campos están seleccionados
     if (productUnitary != '' && productSubtotal != '') {
         //eliminamos los colores de los campos resaltados
@@ -70,7 +72,7 @@ $(".addCar").on("click", function () {
             detail
             );
         //agregamos los datos a la tabla detalle
-        $("#billif").find('tbody').append($('<tr><td class="">' + auto + '</td><td class="">' + productId + '</td><td>' + productDescription + '</td><td>' + productQuantity + '</td><td>' + productUnitary + '</td><td>' + productSubtotal + '</td><td>' + removeRow + '</td></tr>'));
+        $("#billif").find('tbody').append($('<tr><td class="hidden">' + auto + '</td><td class="">' + productId + '</td><td>' + productDescription + '</td><td>' + productQuantity + '</td><td>' + productUnitary + '</td><td>' + productSubtotal + '</td><td>' + removeRow + '</td></tr>'));
         auto++;
         //limpiamos los campos
         $("#unitary,#subtotal").val("");
@@ -88,14 +90,6 @@ $(".addCar").on("click", function () {
 
 });
 
-function arrSum() {
-    for (var x = 0; x < totalBuy.length; x++) {
-        for (var i = 0; i < totalBuy[x].length; i++) {
-            console.log(totalBuy[x][i]);
-        }
-    }
-}
-
 $(document).on("click", ".removeRow", function () {
     //elegimos la posición del array a eliminar
     var idRemove = $(this).parent().parent().children("td:eq(0)").html();
@@ -112,27 +106,24 @@ $(document).on("click", ".removeRow", function () {
 /**
 *función que se encarga de finalizar la compra tomando los datos del vendedor, comprador y el detalle de la venta.
 */
-$(document).on("click", ".billFinal", function () {
+function addToJson() {
     if ($.trim($("[name=cliId]").val()) != '') {
         $("[name=cliId]").removeClass("bg-danger");
         //obtenemos los datos del vendedor
         dataOfSale.salePerson = 1010;
         //obtenemos los datos del cliente
         dataOfSale.clientPerson = $("[name=cliId]").val();
-        //obtenemos el detalle de la venta escogida
-        dataOfSale.detail = JSON.stringify(totalBuy);
-        //convertimos en json
-        var json = JSON.stringify(dataOfSale);
-        //agregamos el json al atributo id para realizar el proceso ajax
-        $(this).attr("id", json);
+        if (totalBuy.length > 0) {
+            //obtenemos el detalle de la venta escogida
+            dataOfSale.detail = JSON.stringify(totalBuy);
+            //convertimos en json
+            json = JSON.stringify(dataOfSale);
+        }
+        else {
+            json = "";
+        }
     }
     else {
         $("[name=cliId]").addClass("bg-danger");
     }
-
-})
-
-$(document).on("click", ".viewArray", function () {
-    console.log(totalBuy);
-    arrSum();
-});
+}

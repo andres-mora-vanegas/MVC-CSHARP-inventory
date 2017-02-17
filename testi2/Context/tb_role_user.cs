@@ -21,7 +21,7 @@ namespace testi2.Context
         public long rolu_status { get; set; }
     
         public virtual tb_role tb_role { get; set; }
-        public virtual tb_users tb_users { get; set; }
+        public virtual users tb_users { get; set; }
         public virtual tb_state tb_state { get; set; }
     }
 }

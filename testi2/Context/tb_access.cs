@@ -19,6 +19,6 @@ namespace testi2.Context
         public Nullable<System.DateTime> acc_date { get; set; }
         public Nullable<System.DateTime> acc_final_date { get; set; }
     
-        public virtual tb_users tb_users { get; set; }
+        public virtual users tb_users { get; set; }
     }
 }

@@ -13,6 +13,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using testi2.Context;
+using testi2.Models;
+using static testi2.Models.SaleModels;
 
 namespace testi2.Controllers
 {
@@ -75,14 +77,12 @@ namespace testi2.Controllers
         {
 
             var bandera = "";
-            //var actualDate = "2017-02-15";
-            //DateTime actualDate = DateTime.ParseExact("2017-02-15 14:40:52,531", "yyyy-MM-dd HH:mm:ss,fff",
-            //                           System.Globalization.CultureInfo.InvariantCulture);
+            //fecha actual del sistema
             DateTime actualDate = DateTime.Now;
             String[] cultureNames = { "es-CO" };
 
             var obj = new JObject();
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            JavaScriptSerializer serializer = new JavaScriptSerializer();            
             JsonCLass Data = serializer.Deserialize<JsonCLass>(id);
 
             int salePerson = Int32.Parse(Data.salePerson);
@@ -110,28 +110,28 @@ namespace testi2.Controllers
                 //JsonCLass Data = serializer.Deserialize<JsonCLass>(id);
 
                 //recorremos todos los items adquiridos
-                //foreach (detail objitem in Data.items)
-                //{
-                //    //obtenemos los datos a insertar en la tabla
-                //    long productId = long.Parse(objitem.productId);//Get all item of jsonID .
-                //    string productDescription = objitem.productDescription;//Get all item of jsonID .
-                //    long productQuantity = long.Parse(objitem.productQuantity);//Get all item of jsonID .
-                //    long productSubtotal = long.Parse(objitem.productSubtotal);//Get all item of jsonID .
+                foreach (detail objitem in Data.items)
+                {
+                    //obtenemos los datos a insertar en la tabla
+                    long productId = long.Parse(objitem.productId);//Get all item of jsonID .
+                    string productDescription = objitem.productDescription;//Get all item of jsonID .
+                    long productQuantity = long.Parse(objitem.productQuantity);//Get all item of jsonID .
+                    long productSubtotal = long.Parse(objitem.productSubtotal);//Get all item of jsonID .
 
-                //    var sql2 = new tb_sale_detail
-                //    {
-                //        sade_sale_id = idx,
-                //        sade_stock_id = productId,
-                //        sade_quantity = productQuantity,
-                //        sade_subtotal = productSubtotal
-                //    };
-                //    //guardamos los articulos comprados
-                //    db.tb_sale_detail.Add(sql2);
-                //    db.SaveChanges();
-                //}
+                    var sql2 = new tb_sale_detail
+                    {
+                        sade_sale_id = idx,
+                        sade_stock_id = productId,
+                        sade_quantity = productQuantity,
+                        sade_subtotal = productSubtotal
+                    };
+                    //guardamos los articulos comprados
+                    db.tb_sale_detail.Add(sql2);
+                    db.SaveChanges();
+                }
 
                 obj["state"] = "ok";
-                obj["answer"] = var_dump(Data.items, 0);
+                obj["answer"] = id;
             }
             else
             {
@@ -143,20 +143,9 @@ namespace testi2.Controllers
             return Json(temp, JsonRequestBehavior.AllowGet);
         }
 
-        public class JsonCLass
-        {
-            public string salePerson { get; set; }
-            public string clientPerson { get; set; }
-            public detail[] items { get; set; }
-        }
+        
 
-        public class detail
-        {
-            public string productId { get; set; }
-            public string productDescription { get; set; }
-            public string productQuantity { get; set; }
-            public string productSubtotal { get; set; }
-        }
+        
 
         public string var_dump(object obj, int recursion)
         {

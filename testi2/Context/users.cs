@@ -12,25 +12,25 @@ namespace testi2.Context
     using System;
     using System.Collections.Generic;
     
-    public partial class tb_users
+    public partial class users
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public tb_users()
+        public users()
         {
             this.tb_access = new HashSet<tb_access>();
             this.tb_role_user = new HashSet<tb_role_user>();
             this.tb_sale = new HashSet<tb_sale>();
         }
     
-        public long us_id { get; set; }
-        public string us_name { get; set; }
-        public string us_lastname { get; set; }
-        public string us_phone { get; set; }
-        public string us_email { get; set; }
-        public string us_pass { get; set; }
-        public long us_cityId { get; set; }
-        public System.DateTime us_createDate { get; set; }
-        public long us_state { get; set; }
+        public long userId { get; set; }
+        public string userName { get; set; }
+        public string userLastNamel { get; set; }
+        public string userPhone { get; set; }
+        public string userEmail { get; set; }
+        public string userPass { get; set; }
+        public long userCityId { get; set; }
+        public System.DateTime userCreateDate { get; set; }
+        public long userState { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tb_access> tb_access { get; set; }

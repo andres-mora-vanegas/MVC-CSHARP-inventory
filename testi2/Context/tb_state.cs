@@ -26,7 +26,7 @@ namespace testi2.Context
             this.tb_role_user = new HashSet<tb_role_user>();
             this.tb_sale = new HashSet<tb_sale>();
             this.tb_stock = new HashSet<tb_stock>();
-            this.tb_users = new HashSet<tb_users>();
+            this.tb_users = new HashSet<users>();
         }
     
         public long sta_id { get; set; }
@@ -51,6 +51,6 @@ namespace testi2.Context
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tb_stock> tb_stock { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tb_users> tb_users { get; set; }
+        public virtual ICollection<users> tb_users { get; set; }
     }
 }
