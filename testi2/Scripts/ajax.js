@@ -37,8 +37,7 @@ $(document).on("click", ".ajaxProcessSingleC", function () {
     var datax = {};
     datax.id = json;
     datax.action = $(this).attr("dataAction");
-    datax.owner = $(this).attr("dataOwner");
-    console.log(datax.id);
+    datax.owner = $(this).attr("dataOwner");    
     if (datax.id != "") {
         var uri = "/" + datax.owner + "/" + datax.action;
         if ($(this).attr("dataBefore") != null) {

@@ -114,10 +114,11 @@ function addToJson() {
         //obtenemos los datos del cliente
         dataOfSale.clientPerson = $("[name=cliId]").val();
         if (totalBuy.length > 0) {
+            console.log(JSON.stringify(totalBuy));
             //obtenemos el detalle de la venta escogida
             dataOfSale.detail = JSON.stringify(totalBuy);
             //convertimos en json
-            json = JSON.stringify(dataOfSale);
+            json = JSON.stringify(dataOfSale).replace(/detail":"\[/, 'detail":[').replace(/]"}/, ']}').replace(/\\"/g,'"');
         }
         else {
             json = "";

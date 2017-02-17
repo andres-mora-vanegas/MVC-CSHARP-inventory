@@ -110,7 +110,7 @@ namespace testi2.Controllers
                 //JsonCLass Data = serializer.Deserialize<JsonCLass>(id);
 
                 //recorremos todos los items adquiridos
-                foreach (detail objitem in Data.items)
+                foreach (detail objitem in Data.detail)
                 {
                     //obtenemos los datos a insertar en la tabla
                     long productId = long.Parse(objitem.productId);//Get all item of jsonID .

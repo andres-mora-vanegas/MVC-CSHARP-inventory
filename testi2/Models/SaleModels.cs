@@ -18,7 +18,7 @@ namespace testi2.Models
 
             public detail Userinfo { get; set; }
 
-            public detail[] items { get; set; }
+            public detail[] detail { get; set; }
         }
 
 

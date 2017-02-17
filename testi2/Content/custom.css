@@ -1,4 +1,8 @@
-﻿td {
+﻿* {
+    font-family: 'Roboto', sans-serif;
+}
+
+td {
     margin: 3px;
     padding: 10px;
 }
