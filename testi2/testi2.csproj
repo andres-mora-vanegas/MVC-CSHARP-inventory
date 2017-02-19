@@ -274,6 +274,7 @@
     <Compile Include="Models\mailer.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\SaleModels.cs" />
+    <Compile Include="Models\Template.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -386,6 +387,7 @@
     <Content Include="Views\sale\Details.cshtml" />
     <Content Include="Views\sale\Edit.cshtml" />
     <Content Include="Views\sale\Index.cshtml" />
+    <Content Include="Views\sale\mailTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

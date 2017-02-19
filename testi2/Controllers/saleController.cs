@@ -15,7 +15,10 @@ using System.Web.Script.Serialization;
 using testi2.Context;
 using testi2.Models;
 using static testi2.Models.SaleModels;
+using static testi2.Models.Template;
 using static testi2.Models.mailer;
+using System.Threading.Tasks;
+using System.IO;
 
 namespace testi2.Controllers
 {
@@ -78,12 +81,14 @@ namespace testi2.Controllers
         {
 
             var bandera = "";
+            var toAlert = 0;
+            var productNamex = "";
             //fecha actual del sistema
             DateTime actualDate = DateTime.Now;
             String[] cultureNames = { "es-CO" };
 
             var obj = new JObject();
-            JavaScriptSerializer serializer = new JavaScriptSerializer();            
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
             JsonCLass Data = serializer.Deserialize<JsonCLass>(id);
 
             int salePerson = Int32.Parse(Data.salePerson);
@@ -135,6 +140,8 @@ namespace testi2.Controllers
                     foreach (var da in howMany)
                     {
                         howManyIndividual = da.sto_avaible;
+                        toAlert = da.sto_alert;
+                        productNamex = da.sto_descript;
                     }
                     howManyIndividual -= productQuantity;
                     //si la cantidad de productos es mayor a 0
@@ -146,20 +153,37 @@ namespace testi2.Controllers
                         result.sto_avaible = Convert.ToInt32(howManyIndividual);
                     }
                     //de lo contrario inactivamos el producto
-                    else {
+                    else
+                    {
                         tb_stock result = (from u in db.tb_stock
                                            where u.sto_id == productId
                                            select u).Single();
                         result.sto_state = 2;
+                        
+                    }
+                    //si la cantidad del producto es menor o igual a la de la alerta se enviará correo
+                    if (howManyIndividual <= toAlert)
+                    {
+                        var obj2 = new mailerDetail();
+                        obj2.mailerBody = Convert.ToString(mailTemplate(productNamex, howManyIndividual));
+                        obj2.mailerSubject = "Notificación de productos";
+                        obj2.mailerName = "andymora";
+                        obj2.mailerEmail = "andres.mora.vanegas@outlook.com";
+                        var send = new mailer();
+                        bandera = send.sendEmail(obj2);
+                        //bandera = JsonConvert.SerializeObject(obj2);
+
+                    }
+                    else
+                    {
+                        bandera = Convert.ToString(howManyIndividual + " <-cantidad disponible  alerta-> " + toAlert);
                     }
 
-                    
-                    //result.Phone = phone;
                     db.SaveChanges();
                 }
 
                 obj["state"] = "ok";
-                obj["answer"] = id;
+                obj["answer"] = bandera;
             }
             else
             {
@@ -171,12 +195,48 @@ namespace testi2.Controllers
             return Json(temp, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult mailTemplate() {
+        
 
-            return View("users/index");
+        public String mailTemplate(String productName, Decimal productQuantity)
+        {
+            String[] pattern = new String[2];
+            String[] replacement = new String[2];            
+
+            var data = new saleNotify();
+            data.productName = productName;            
+            data.productQuantity = Convert.ToString(productQuantity);
+
+            pattern[0] = "#productName#";
+            pattern[1] = "#productQuantity#";            
+
+            replacement[0] = productName;
+            replacement[1] = data.productQuantity;            
+
+            String test = viewToString("mailTemplate", data).PregReplace(pattern, replacement);            
+            return test;            
         }
 
-        
+        public class saleNotify
+        {
+            public string productName { get; set; }
+            public string productQuantity { get; set; }
+
+        }
+
+        public String viewToString(string viewName, object model)
+        {
+
+            ViewData.Model = model;
+            using (var SW = new StringWriter())
+            {
+                var viewResult = ViewEngines.Engines.FindPartialView(ControllerContext, viewName);
+                var viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, SW);
+
+                viewResult.View.Render(viewContext, SW);
+                viewResult.ViewEngine.ReleaseView(ControllerContext, viewResult.View);
+                return SW.GetStringBuilder().ToString();
+            }
+        }
 
         public string var_dump(object obj, int recursion)
         {

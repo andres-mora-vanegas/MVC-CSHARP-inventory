@@ -100,7 +100,7 @@ namespace testi2.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "sto_id,sto_descript,sto_state,sto_avaible,sto_buyPrice,sto_salePrice,sto_url,sto_provId,sto_category")] tb_stock tb_stock)
+        public ActionResult Edit([Bind(Include = "sto_id,sto_descript,sto_state,sto_avaible,sto_buyPrice,sto_salePrice,sto_url,sto_provId,sto_category,sto_alert")] tb_stock tb_stock)
         {
             if (ModelState.IsValid)
             {

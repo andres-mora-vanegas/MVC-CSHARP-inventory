@@ -29,6 +29,7 @@ namespace testi2.Context
         public string sto_url { get; set; }
         public long sto_provId { get; set; }
         public long sto_category { get; set; }
+        public int sto_alert { get; set; }
     
         public virtual tb_category tb_category { get; set; }
         public virtual tb_provider tb_provider { get; set; }
