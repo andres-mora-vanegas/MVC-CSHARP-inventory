@@ -15,6 +15,7 @@ using System.Web.Script.Serialization;
 using testi2.Context;
 using testi2.Models;
 using static testi2.Models.SaleModels;
+using static testi2.Models.mailer;
 
 namespace testi2.Controllers
 {
@@ -128,6 +129,33 @@ namespace testi2.Controllers
                     //guardamos los articulos comprados
                     db.tb_sale_detail.Add(sql2);
                     db.SaveChanges();
+                    //consultamos cuantos productos hay disponibles
+                    var howMany = db.tb_stock.Where(x => x.sto_id == productId);
+                    Decimal howManyIndividual = 0;
+                    foreach (var da in howMany)
+                    {
+                        howManyIndividual = da.sto_avaible;
+                    }
+                    howManyIndividual -= productQuantity;
+                    //si la cantidad de productos es mayor a 0
+                    if (howManyIndividual >= 0)
+                    {
+                        tb_stock result = (from u in db.tb_stock
+                                           where u.sto_id == productId
+                                           select u).Single();
+                        result.sto_avaible = Convert.ToInt32(howManyIndividual);
+                    }
+                    //de lo contrario inactivamos el producto
+                    else {
+                        tb_stock result = (from u in db.tb_stock
+                                           where u.sto_id == productId
+                                           select u).Single();
+                        result.sto_state = 2;
+                    }
+
+                    
+                    //result.Phone = phone;
+                    db.SaveChanges();
                 }
 
                 obj["state"] = "ok";
@@ -143,7 +171,10 @@ namespace testi2.Controllers
             return Json(temp, JsonRequestBehavior.AllowGet);
         }
 
-        
+        public ActionResult mailTemplate() {
+
+            return View("users/index");
+        }
 
         
 
