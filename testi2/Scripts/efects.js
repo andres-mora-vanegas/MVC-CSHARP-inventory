@@ -66,6 +66,7 @@ $(".addCar").on("click", function () {
         detail.productId = productId;
         detail.productDescription = productDescription;
         detail.productQuantity = productQuantity;
+        detail.productPrice = productUnitary;
         detail.productSubtotal = productSubtotal;
         //agregamos los datos del producto al array maestro
         totalBuy.push(
@@ -112,19 +113,24 @@ function addToJson() {
         //obtenemos los datos del vendedor
         dataOfSale.salePerson = 1010;
         //obtenemos los datos del cliente
-        dataOfSale.clientPerson = $("[name=cliId]").val();
+        dataOfSale.clientPerson = $("[name=cliId]").val() + "-" + $("[name=cliId] option:selected").text();
         if (totalBuy.length > 0) {
-            console.log(JSON.stringify(totalBuy));
+
             //obtenemos el detalle de la venta escogida
             dataOfSale.detail = JSON.stringify(totalBuy);
             //convertimos en json
-            json = JSON.stringify(dataOfSale).replace(/detail":"\[/, 'detail":[').replace(/]"}/, ']}').replace(/\\"/g,'"');
+            json = JSON.stringify(dataOfSale).replace(/detail":"\[/, 'detail":[').replace(/]"}/, ']}').replace(/\\"/g, '"');
+            console.log(" el valor de json es " + json);
+
         }
         else {
+
             json = "";
         }
+
     }
     else {
+
         $("[name=cliId]").addClass("bg-danger");
     }
 }

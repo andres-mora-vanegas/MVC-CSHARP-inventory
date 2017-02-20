@@ -77,12 +77,18 @@ namespace testi2.Controllers
         }
 
         [HttpPost]
-        public JsonResult sale(string id)
+        public String sale(string id)
         {
 
             var bandera = "";
             var toAlert = 0;
+            var sendEmail = false;
             var productNamex = "";
+            var acumulaEmail = "";
+            var acumulaBill = "";
+            List<String> pattern = new List<String>();
+            List<String> replacement = new List<String>();
+
             //fecha actual del sistema
             DateTime actualDate = DateTime.Now;
             String[] cultureNames = { "es-CO" };
@@ -91,9 +97,9 @@ namespace testi2.Controllers
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             JsonCLass Data = serializer.Deserialize<JsonCLass>(id);
 
+            var clientName = Data.clientPerson.Split('-')[1];
             int salePerson = Int32.Parse(Data.salePerson);
-            int clientPerson = Int32.Parse(Data.clientPerson);
-            //string Jsonx = Data.items.ToString();
+            int clientPerson = Int32.Parse(Data.clientPerson.Split('-')[0]);            
 
             //validamos que los datos sean distintos a vacio
             if (salePerson != 0 && salePerson != 0)
@@ -110,10 +116,7 @@ namespace testi2.Controllers
                 db.SaveChanges();
                 db.Entry(sql).GetDatabaseValues();
                 //obtenemos id de la venta insertada
-                var idx = sql.sal_id;
-
-                //JavaScriptSerializer serializer = new JavaScriptSerializer();
-                //JsonCLass Data = serializer.Deserialize<JsonCLass>(id);
+                var idx = sql.sal_id;                
 
                 //recorremos todos los items adquiridos
                 foreach (detail objitem in Data.detail)
@@ -122,6 +125,7 @@ namespace testi2.Controllers
                     long productId = long.Parse(objitem.productId);//Get all item of jsonID .
                     string productDescription = objitem.productDescription;//Get all item of jsonID .
                     long productQuantity = long.Parse(objitem.productQuantity);//Get all item of jsonID .
+                    long productPrice = long.Parse(objitem.productPrice);//Get all item of jsonID .
                     long productSubtotal = long.Parse(objitem.productSubtotal);//Get all item of jsonID .
 
                     var sql2 = new tb_sale_detail
@@ -134,6 +138,27 @@ namespace testi2.Controllers
                     //guardamos los articulos comprados
                     db.tb_sale_detail.Add(sql2);
                     db.SaveChanges();
+
+                    //guardamos el detalle para la factura
+                    //se inician los tags y remplazos                    
+                    pattern.Clear();
+                    replacement.Clear();
+                    //se asignana los tags
+                    pattern.Add("#idProduct#");
+                    pattern.Add("#descriptProduct#");
+                    pattern.Add("#quantityProduct#");
+                    pattern.Add("#saleProduct#");
+                    pattern.Add("#subtotalProduct#");
+
+                    //se asignan los remplazos
+                    replacement.Add(Convert.ToString(productId));
+                    replacement.Add(Convert.ToString(productDescription));
+                    replacement.Add(Convert.ToString(productQuantity));
+                    replacement.Add(Convert.ToString(productPrice));
+                    replacement.Add(Convert.ToString(productSubtotal));
+                    //se acumula el email
+                    acumulaBill += viewToString("detailBill").PregReplace(pattern.ToArray(), replacement.ToArray());
+
                     //consultamos cuantos productos hay disponibles
                     var howMany = db.tb_stock.Where(x => x.sto_id == productId);
                     Decimal howManyIndividual = 0;
@@ -144,7 +169,7 @@ namespace testi2.Controllers
                         productNamex = da.sto_descript;
                     }
                     howManyIndividual -= productQuantity;
-                    //si la cantidad de productos es mayor a 0
+                    //si la cantidad de productos restantes es mayor a 0
                     if (howManyIndividual >= 0)
                     {
                         tb_stock result = (from u in db.tb_stock
@@ -164,26 +189,73 @@ namespace testi2.Controllers
                     //si la cantidad del producto es menor o igual a la de la alerta se enviará correo
                     if (howManyIndividual <= toAlert)
                     {
-                        var obj2 = new mailerDetail();
-                        obj2.mailerBody = Convert.ToString(mailTemplate(productNamex, howManyIndividual));
-                        obj2.mailerSubject = "Notificación de productos";
-                        obj2.mailerName = "andymora";
-                        obj2.mailerEmail = "andres.mora.vanegas@outlook.com";
-                        var send = new mailer();
-                        bandera = send.sendEmail(obj2);
-                        //bandera = JsonConvert.SerializeObject(obj2);
+                        //se activa el envío de emails
+                        sendEmail = true;
+                        pattern.Clear();
+                        replacement.Clear();
+
+                        //se asignana los tags
+                        pattern.Add("#productName#");
+                        pattern.Add("#productQuantity#");
+
+                        //se asignan los remplazos                        
+                        replacement.Add(productDescription);
+                        replacement.Add(Convert.ToString(howManyIndividual));                        
+                        //se acumula el email
+                        acumulaEmail += viewToString("detailMailTemplate").PregReplace(pattern.ToArray(), replacement.ToArray());                       
 
                     }
                     else
                     {
                         bandera = Convert.ToString(howManyIndividual + " <-cantidad disponible  alerta-> " + toAlert);
                     }
-
                     db.SaveChanges();
                 }
+                //si se debe enviar email
+                if (sendEmail==true) {
+                    var obj2 = new mailerDetail();
+
+                    pattern.Clear();
+                    replacement.Clear();
+
+                    //se asignana los tags
+                    pattern.Add("#detailMailTemplate#");                    
+
+                    //se asignan los remplazos                        
+                    replacement.Add(Convert.ToString(acumulaEmail));                    
+
+                    obj2.mailerBody = Convert.ToString(viewToString("mailTemplate").PregReplace(pattern.ToArray(), replacement.ToArray()));
+                    obj2.mailerSubject = "Notificación de productos";
+                    obj2.mailerName = "andymora";
+                    obj2.mailerEmail = "andres.mora.vanegas@outlook.com";
+                    var send = new mailer();
+                    bandera = send.sendEmail(obj2);
+                }
+
+                //generación de la factura
+                pattern.Clear();
+                replacement.Clear();
+
+                pattern.Add("#dateBill#");
+                pattern.Add("#idSale#");
+                pattern.Add("#idBill#");
+                pattern.Add("#client#");
+                pattern.Add("#detailBill#");
+                pattern.Add("#totalBill#");
+                pattern.Add("#salerBill#");
+
+                replacement.Add(Convert.ToString(actualDate));
+                replacement.Add(Convert.ToString(idx));
+                replacement.Add(Convert.ToString(idx));
+                replacement.Add(clientName);
+                replacement.Add(acumulaBill);
+                replacement.Add("2000");
+                replacement.Add("holitas");
+
+                var bill = Convert.ToString(viewToString("billTemplate").PregReplace(pattern.ToArray(), replacement.ToArray()));
 
                 obj["state"] = "ok";
-                obj["answer"] = bandera;
+                obj["answer"] = bill;
             }
             else
             {
@@ -192,27 +264,16 @@ namespace testi2.Controllers
             }
 
             var temp = JsonConvert.SerializeObject(obj);
-            return Json(temp, JsonRequestBehavior.AllowGet);
+            //return Json(temp, JsonRequestBehavior.AllowGet);
+            return Convert.ToString(obj["answer"]);
         }
 
         
 
         public String mailTemplate(String productName, Decimal productQuantity)
         {
-            String[] pattern = new String[2];
-            String[] replacement = new String[2];            
-
-            var data = new saleNotify();
-            data.productName = productName;            
-            data.productQuantity = Convert.ToString(productQuantity);
-
-            pattern[0] = "#productName#";
-            pattern[1] = "#productQuantity#";            
-
-            replacement[0] = productName;
-            replacement[1] = data.productQuantity;            
-
-            String test = viewToString("mailTemplate", data).PregReplace(pattern, replacement);            
+            
+            String test = viewToString("mailTemplate");            
             return test;            
         }
 
@@ -223,10 +284,10 @@ namespace testi2.Controllers
 
         }
 
-        public String viewToString(string viewName, object model)
+        public String viewToString(string viewName)
         {
 
-            ViewData.Model = model;
+            
             using (var SW = new StringWriter())
             {
                 var viewResult = ViewEngines.Engines.FindPartialView(ControllerContext, viewName);

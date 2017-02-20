@@ -27,6 +27,7 @@ namespace testi2.Models
             public string productId { get; set; }
             public string productDescription { get; set; }
             public string productQuantity { get; set; }
+            public string productPrice { get; set; }
             public string productSubtotal { get; set; }
         }
     }

@@ -10,7 +10,7 @@ namespace testi2.Models
     {
         public String sendEmail(mailerDetail obj) {
 
-            string your_id = "";
+            string your_id = "@gmail.com";
             string your_password = "";
             string myName = "Andres Mora";
             String answer = "noSend";

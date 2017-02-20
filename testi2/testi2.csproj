@@ -388,6 +388,9 @@
     <Content Include="Views\sale\Edit.cshtml" />
     <Content Include="Views\sale\Index.cshtml" />
     <Content Include="Views\sale\mailTemplate.cshtml" />
+    <Content Include="Views\sale\billTemplate.cshtml" />
+    <Content Include="Views\sale\detailBill.cshtml" />
+    <Content Include="Views\sale\detailMailTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

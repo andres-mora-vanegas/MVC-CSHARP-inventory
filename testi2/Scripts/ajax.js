@@ -35,13 +35,15 @@
 $(document).on("click", ".ajaxProcessSingleC", function () {
     addToJson();
     var datax = {};
+    var response = "no data";
     datax.id = json;
     datax.action = $(this).attr("dataAction");
-    datax.owner = $(this).attr("dataOwner");    
+    datax.owner = $(this).attr("dataOwner");
+    
     if (datax.id != "") {
         var uri = "/" + datax.owner + "/" + datax.action;
-        if ($(this).attr("dataBefore") != null) {
-            var a = $(this).attr("dataBefore");
+        if ($(this).attr("databefore") != null) {
+            var a = $(this).attr("databefore");
             $.ajax({
                 url: uri,
                 type: 'post',
@@ -56,13 +58,16 @@ $(document).on("click", ".ajaxProcessSingleC", function () {
                 type: 'post',
                 data: datax
             }).done(function (response) {
+                //console.log(response)
                 bootbox.alert(response);
             }).fail(function () {
+                //console.log(response)
                 bootbox.alert(error);
             })
         }
     }
     else {
-        bootbox.alert(noData);
+        bootbox.alert(nodata);
+        //console.log(response)
     }
 })

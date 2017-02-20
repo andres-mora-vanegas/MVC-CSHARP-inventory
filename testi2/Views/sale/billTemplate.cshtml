@@ -1,0 +1,94 @@
+﻿
+@{
+    ViewBag.Title = "billTemplate";
+}
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<title>validacion</title>
+<body style=''>
+    <style>
+        * {
+            font-size: 14px;
+        }
+    </style>
+    <link rel='stylesheet' href='' />
+    <script src='../../js/efects.js'></script>
+    <div class='ocultonegro' align='center'></div>
+    <div align='center'>
+        <div class='mostrarblanco noMostrarBlanco' style='' align='center'>
+            <br />
+            <div id='billImp' style='width:400px;'>
+                <table style='border-style:solid; border-width:thin;width: 400px;' cellpadding='1' cellspacing='1'>
+                    <tbody>
+                        <tr>
+                            <td style='text-align:center'>DisRepuestos</td>
+                        </tr>
+                        <tr>
+                            <td style='text-align:center'>FACTURA DE COMPRA</td>
+                        </tr>
+                        <tr>
+                            <td style='text-align:center'>IVA INCLUIDO</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table style='border-style:solid; border-width:thin;width: 400px;' cellpadding='1' cellspacing='1'>
+                    <tbody>
+                        <tr>
+                            <td>Fecha</td>
+                            <td style='text-align:right'>#dateBill#</td>
+                        </tr>
+                        <tr>
+                            <td>Venta #</td>
+                            <td style='text-align:right'>
+                                #idSale#
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Factura #</td>
+                            <td style='text-align:right'>
+                                #idBill#
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Cliente:</td>
+                            <td style='text-align:right'>
+                                #client#
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table style='border-style:solid; border-width:thin;width: 400px;' cellpadding='1' cellspacing='1'>
+                    <tbody>
+                        <tr>
+                            <td>ID</td>
+                            <td>Producto</td>
+                            <td>Cantidad</td>
+                            <td style='text-align:center'>Precio <br />unitario</td>
+                            <td style='text-align:right'>Subtotal</td>
+                        </tr>
+                        #detailBill#
+                    </tbody>
+                </table>
+                <table style='border-style:solid; border-width:thin;width: 400px;' cellpadding='1' cellspacing='1'>
+                    <tbody>
+                        <tr>
+                            <td>Total</td>
+                            <td style='text-align:right'><label>#totalBill#</label></td>
+                        </tr>
+                        <tr>
+                            <td>Atendido por:</td>
+                            <td style='text-align:right'><label>#salerBill#</label></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table style='border-style:solid; border-width:thin;width: 400px;' cellpadding='1' cellspacing='1'>
+                    <tbody>
+                        <tr>
+                            <td style='text-align:center'>Muchas gracias por su compra</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <a href='javascript:imprSelecFact()'>Imprimir factura</a>
+        </div>
+    </div>
+</body>
