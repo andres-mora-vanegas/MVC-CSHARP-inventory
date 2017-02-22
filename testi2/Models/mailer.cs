@@ -10,7 +10,7 @@ namespace testi2.Models
     {
         public String sendEmail(mailerDetail obj) {
 
-            string your_id = "@gmail.com";
+            string your_id = "";
             string your_password = "";
             string myName = "Andres Mora";
             String answer = "noSend";
@@ -24,12 +24,7 @@ namespace testi2.Models
                     DeliveryMethod = SmtpDeliveryMethod.Network,
                     Credentials = new System.Net.NetworkCredential(your_id, your_password),
                     Timeout = 10000,
-                };
-                //MailMessage mm = new MailMessage(obj.mailerEmail, obj.mailerName, obj.mailerSubject, obj.mailerBody);
-                //client.Send(mm);
-                ////Console.WriteLine("Email Sent");
-                //answer = "yes, sended";
-
+                };                
                 // add from,to mailaddresses
                 MailAddress from = new MailAddress(your_id, myName);
                 MailAddress to = new MailAddress(obj.mailerEmail, obj.mailerName);
@@ -55,7 +50,7 @@ namespace testi2.Models
             }
             catch (Exception e)
             {
-                //Console.WriteLine("Could not end email\n\n" + e.ToString());
+                //return the error message
                 answer = e.ToString();
             }
 

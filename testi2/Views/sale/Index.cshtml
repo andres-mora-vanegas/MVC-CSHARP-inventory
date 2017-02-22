@@ -11,20 +11,20 @@
             <div class="container table-responsive" id="info">                
                 <br />
                 <div class="row">
-                    <div class="col-xs-12">Selecciona el cliente</div>
+                    <div class="col-xs-12 bold">Selecciona el cliente</div>
                     <div class="col-xs-12">@Html.DropDownList("cliId", ViewBag.clientId as SelectList, "Seleccione un cliente", htmlAttributes: new { @class = "form-control " })</div>
                     <label id="error"></label>
                 </div>
                 <div class="row">
-                    <div class="col-xs-6">Producto</div>
-                    <div class="col-xs-6">Cantidad</div>
+                    <div class="col-xs-6 bold">Producto</div>
+                    <div class="col-xs-6 bold">Cantidad</div>
                     <div class="col-xs-6">@Html.DropDownList("stockId", ViewBag.productId as SelectList, "Seleccione un producto", htmlAttributes: new { @class = "form-control stockId ajaxProcessSingle", @dataAction = "stockQuantity", @dataOwner = "sale", @dataBefore = "quantityOption" })</div>
                     <div class="col-xs-6 hidden">@Html.DropDownList("stockPrice", ViewBag.productList as SelectList, "Seleccione un producto", htmlAttributes: new { @class = "form-control stockPrice" })</div>
                     <div class="col-xs-6">@Html.DropDownList("productQuantity", ViewBag.productQuantity as SelectList, "Seleccione la cantidad", new { @class = "form-control", @id = "DropDownListQuantity" })</div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-6">Precio unitario</div>
-                    <div class="col-xs-6">Subtotal</div>
+                    <div class="col-xs-6 bold">Precio unitario</div>
+                    <div class="col-xs-6 bold">Subtotal</div>
                     <div class="col-xs-6">
                         <input type="text" class="form-control" readonly name="unitary" id="unitary" />
                     </div>
@@ -42,7 +42,7 @@
                     </div>
                 </div>
                 <hr />
-                <div id="bill" style="">
+                <div id="" style="" class="table-responsive">
                     <label>Resumen de articulos seleccionados</label>
                     <table class="table-bordered table" id="billif">
                         <thead>
@@ -69,12 +69,12 @@
                         </thead>
                         <tbody></tbody>
                     </table>
-                    <table>
-                        <tr>
-                            <td style="border:none">
+                    <table style="border:1px">
+                        <tr style="border:1px">
+                            <td style="border:1px">
                                 Total
                             </td>
-                            <td style="border:none" id="totalSale"></td>
+                            <td style="border:1px;font-weight:bold" id="totalSale"></td>
                     </table>
                 </div>
             </div>

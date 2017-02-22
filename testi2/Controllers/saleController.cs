@@ -86,6 +86,7 @@ namespace testi2.Controllers
             var productNamex = "";
             var acumulaEmail = "";
             var acumulaBill = "";
+            long acumulaTotal = 0;
             List<String> pattern = new List<String>();
             List<String> replacement = new List<String>();
 
@@ -139,6 +140,8 @@ namespace testi2.Controllers
                     db.tb_sale_detail.Add(sql2);
                     db.SaveChanges();
 
+                    //guardamos el total de la factura
+                    acumulaTotal += productSubtotal;
                     //guardamos el detalle para la factura
                     //se inician los tags y remplazos                    
                     pattern.Clear();
@@ -249,7 +252,7 @@ namespace testi2.Controllers
                 replacement.Add(Convert.ToString(idx));
                 replacement.Add(clientName);
                 replacement.Add(acumulaBill);
-                replacement.Add("2000");
+                replacement.Add(Convert.ToString(acumulaTotal));
                 replacement.Add("holitas");
 
                 var bill = Convert.ToString(viewToString("billTemplate").PregReplace(pattern.ToArray(), replacement.ToArray()));

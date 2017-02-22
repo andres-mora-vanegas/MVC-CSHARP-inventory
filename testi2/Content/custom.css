@@ -4,7 +4,20 @@
 
 td {
     margin: 3px;
-    padding: 10px;
+    padding: 10px;    
+    text-align: center;
+}
+
+#billif thead {
+    font-weight: bold;
+}
+
+#billif tbody {
+    background:#FFFFFF;
+}
+
+.bold {
+    font-weight: bold;
 }
 
 #info {
@@ -14,7 +27,7 @@ td {
 }
 
 .margin {
-    margin:5px;
+    margin: 5px;
 }
 
 .preimg {

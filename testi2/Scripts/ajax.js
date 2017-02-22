@@ -55,19 +55,26 @@ $(document).on("click", ".ajaxProcessSingleC", function () {
         else {
             $.ajax({
                 url: uri,
+                cache: false,
+                headers: {
+                    'Cache-Control': 'no-cache, no-store, must-revalidate', 
+                    'Pragma': 'no-cache', 
+                    'Expires': '0'
+                },
                 type: 'post',
                 data: datax
             }).done(function (response) {
                 //console.log(response)
                 bootbox.alert(response);
-            }).fail(function () {
-                //console.log(response)
+            }).fail(function () {                
                 bootbox.alert(error);
+            }).beforeSend(function () {
+                bootbox.alert(loading);
             })
         }
     }
     else {
-        bootbox.alert(nodata);
+        bootbox.alert(noData);
         //console.log(response)
     }
 })
